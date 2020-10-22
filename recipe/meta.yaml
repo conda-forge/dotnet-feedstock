@@ -19,6 +19,7 @@ source:
   folder: dotnet
 
 build:
+  skip: true  # [osx]
   number: 1
 
 outputs:
