@@ -19,7 +19,6 @@ source:
   folder: dotnet
 
 build:
-  skip: true
   number: 1
 
 outputs:
