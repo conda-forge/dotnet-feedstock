@@ -1,2 +1,2 @@
-$env:_CONDA_BACKUP_DOTNET_HOME = $env:DOTNET_HOME
-$env:DOTNET_HOME = Join-Path $env:CONDA_PREFIX dotnet
+$env:_CONDA_BACKUP_DOTNET_ROOT = $env:DOTNET_ROOT
+$env:DOTNET_ROOT = Join-Path $env:CONDA_PREFIX dotnet
