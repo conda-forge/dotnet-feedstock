@@ -4,12 +4,12 @@ set -eox pipefail
 PREFIX=$(echo "${PREFIX}" | tr '\\' '/')
 
 if [[ "${build_platform}" == "win-64" ]]; then
-    DOTNET_HOME="${PREFIX}/dotnet"
+    DOTNET_ROOT="${PREFIX}/dotnet"
 else
-    DOTNET_HOME="${PREFIX}/lib/dotnet"
+    DOTNET_ROOT="${PREFIX}/lib/dotnet"
 fi
 
-mkdir -p "${DOTNET_HOME}"
-cp -r ./dotnet/packs/ "${DOTNET_HOME}/packs/"
-cp -r ./dotnet/sdk/ "${DOTNET_HOME}/sdk/"
-cp -r ./dotnet/templates/ "${DOTNET_HOME}/templates/"
+mkdir -p "${DOTNET_ROOT}"
+cp -r ./dotnet/packs/ "${DOTNET_ROOT}/packs/"
+cp -r ./dotnet/sdk/ "${DOTNET_ROOT}/sdk/"
+cp -r ./dotnet/templates/ "${DOTNET_ROOT}/templates/"
