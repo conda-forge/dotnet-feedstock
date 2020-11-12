@@ -1,8 +1,8 @@
-{% set sdk_version = "3.1.403" %}
-{% set runtime_version = "3.1.19" %}
-{% set sha256 = "fe1cb8607ba7bb28631c4052da56b64467d70d6461f28adfedf3850fe71878d0" %}  # [osx]
-{% set sha256 = "a87b3cbc4f1253fb36a879472c1a792d98edd7cad0085aed7855474d121f4c47" %}  # [linux]
-{% set sha256 = "04de83b5fc42ffbd4737bcc15c8911ec8de3a99d65e7f77bd37fbe67119d3f0c" %}  # [win]
+{% set sdk_version = "5.0.100" %}
+{% set runtime_version = "5.0.0" %}
+{% set sha256 = "cbe223333a9724e83bd1448db30a8b5136a46a3d1c1a1f42c26e31b01523a389" %}  # [osx]
+{% set sha256 = "b8278fd20a7242e711ee46910c23804babf9b38a4c1b97e2a4d9c5155d21cbd2" %}  # [linux]
+{% set sha256 = "296c89fbfdfedb652e314342e0de069ff392db1a4b0367a2daa9554cf50c1dec" %}  # [win]
 {% set platform = "linux" %}  # [linux]
 {% set platform = "osx" %}    # [osx]
 {% set platform = "win" %}    # [win]
@@ -20,7 +20,7 @@ source:
 
 build:
   skip: true  # [osx]
-  number: 3
+  number: 0
 
 outputs:
   - name: dotnet
