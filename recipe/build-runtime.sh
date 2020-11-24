@@ -10,6 +10,7 @@ else
 fi
 
 mkdir -p "${DOTNET_ROOT}/shared"
+mkdir -p "${DOTNET_ROOT}/tools"
 
 cp ./dotnet/dotnet* "${DOTNET_ROOT}"
 cp -r ./dotnet/shared/Microsoft.NETCore.App/ "${DOTNET_ROOT}/shared/Microsoft.NETCore.App/"

@@ -10,7 +10,4 @@ set BUILD_PLATFORM=win-64
 bash -lc "./build-runtime.sh"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-echo F | xcopy "%RECIPE_DIR%\dotnet.cmd" "%PREFIX%\Scripts\dotnet.cmd" /F /Y
-if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
-
 exit /b 0
