@@ -1,3 +1,5 @@
+@echo off
+
 call set PATH=%%PATH:%DOTNET_ROOT%;=%%
 call set PATH=%%PATH:%DOTNET_TOOLS%;=%%
 

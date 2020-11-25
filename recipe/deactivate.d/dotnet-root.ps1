@@ -2,9 +2,8 @@ $path = (
     $env:PATH.Split(';') `
     | Where-Object { $_ -ne $env:DOTNET_ROOT } `
     | Where-Object { $_ -ne $env:DOTNET_TOOLS } `
-) -join ';'
-
-$env:PATH = $path
+)
+$env:PATH = $path -join ';'
 
 $env:DOTNET_CLI_TELEMETRY_OPTOUT=''
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=''
