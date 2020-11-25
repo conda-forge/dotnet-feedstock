@@ -22,8 +22,7 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 export DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=false
 
 # remove existing entries to prevent duplicates
-NEW_PATH=remove_from_path "${DOTNET_ROOT}"
-NEW_PATH=remove_from_path "${DOTNET_TOOLS}" "${NEW_PATH}"
-export PATH=$NEW_PATH
+NEW_PATH=$(remove_from_path "${DOTNET_ROOT}")
+NEW_PATH=$(remove_from_path "${DOTNET_TOOLS}" "${NEW_PATH}")
 
-export PATH="${DOTNET_ROOT}:${DOTNET_TOOLS}${PATH:+:${PATH}}"
+export PATH="${DOTNET_ROOT}:${DOTNET_TOOLS}:${NEW_PATH}"
