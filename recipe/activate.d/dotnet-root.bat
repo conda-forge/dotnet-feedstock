@@ -1,3 +1,5 @@
+@echo off
+
 set _CONDA_BACKUP_DOTNET_ROOT=%DOTNET_ROOT%
 set _CONDA_BACKUP_DOTNET_TOOLS=%DOTNET_TOOLS%
 
@@ -7,5 +9,9 @@ set DOTNET_TOOLS=%DOTNET_ROOT%\tools
 set DOTNET_CLI_TELEMETRY_OPTOUT=true
 set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 set DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=false
+
+# remove existing entries to prevent duplicates
+call set PATH=%%PATH:%DOTNET_ROOT%;=%%
+call set PATH=%%PATH:%DOTNET_TOOLS%;=%%
 
 set PATH=%DOTNET_ROOT%;%DOTNET_TOOLS%;%PATH%

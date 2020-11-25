@@ -11,8 +11,8 @@ function remove_from_path {
     echo "$RESULT"
 }
 
-NEW_PATH=remove_from_path "${DOTNET_ROOT}"
-NEW_PATH=remove_from_path "${DOTNET_TOOLS}" "${NEW_PATH}"
+NEW_PATH=$(remove_from_path "${DOTNET_ROOT}")
+NEW_PATH=$(remove_from_path "${DOTNET_TOOLS}" "${NEW_PATH}")
 export PATH=$NEW_PATH
 
 unset DOTNET_CLI_TELEMETRY_OPTOUT
