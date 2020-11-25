@@ -20,17 +20,17 @@ source:
 
 build:
   skip: true  # [osx]
-  number: 1
+  number: 2
 
 outputs:
   - name: dotnet
     version: {{ sdk_version }}
     requirements:
       run:
-        - dotnet-runtime ={{ runtime_version }}
-        - dotnet-aspnetcore ={{ runtime_version }}
-        - dotnet-desktop ={{ runtime_version }}     # [win]
-        - dotnet-sdk ={{ sdk_version }}
+        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
+        - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
+        - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
+        - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
         - dotnet --version
