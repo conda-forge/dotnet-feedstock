@@ -20,7 +20,7 @@ source:
 
 build:
   skip: true  # [osx]
-  number: 3
+  number: 4
 
 outputs:
   - name: dotnet
