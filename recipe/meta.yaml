@@ -19,8 +19,7 @@ source:
   folder: dotnet
 
 build:
-  skip: true  # [osx]
-  number: 4
+  number: 5
 
 outputs:
   - name: dotnet
