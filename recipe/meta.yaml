@@ -33,7 +33,7 @@ outputs:
     test:
       commands:
        - $PREFIX/lib/dotnet/dotnet --version 
-       - dotnet --version
+       - dotnet --version  # [not osx]
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
@@ -91,7 +91,7 @@ outputs:
     test:
       commands:
         - $PREFIX/lib/dotnet/dotnet --version 
-        - dotnet --version
+        - dotnet --version  # [not osx]
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
