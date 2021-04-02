@@ -32,7 +32,8 @@ outputs:
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
-        - dotnet --version
+       - $PREFIX/lib/dotnet/dotnet --version 
+       - dotnet --version
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
