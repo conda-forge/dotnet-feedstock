@@ -26,6 +26,8 @@ echo -e "\n\nSetting up the condarc and mangling the compiler."
 conda config --add channels defaults
 setup_conda_rc ./ ./recipe ./.ci_support/${CONFIG}.yaml
 mangle_compiler ./ ./recipe .ci_support/${CONFIG}.yaml
+cat .condarc
+echo $PATH
 
 echo -e "\n\nMangling homebrew in the CI to avoid conflicts."
 /usr/bin/sudo mangle_homebrew
