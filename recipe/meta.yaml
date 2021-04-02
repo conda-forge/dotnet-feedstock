@@ -90,6 +90,7 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
+        - $PREFIX/lib/dotnet/dotnet --version 
         - dotnet --version
     about:
       home: https://github.com/dotnet/sdk
