@@ -23,6 +23,7 @@ conda install -n base --quiet --yes "conda-forge-ci-setup=3" conda-build pip ${G
 
 
 echo -e "\n\nSetting up the condarc and mangling the compiler."
+conda config --add channels defaults
 setup_conda_rc ./ ./recipe ./.ci_support/${CONFIG}.yaml
 mangle_compiler ./ ./recipe .ci_support/${CONFIG}.yaml
 
