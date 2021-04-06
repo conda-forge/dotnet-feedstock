@@ -32,8 +32,7 @@ outputs:
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
-       - $PREFIX/lib/dotnet/dotnet --version  # [not win] 
-       - dotnet --version  # [not osx]
+       - dotnet --version
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
@@ -88,8 +87,7 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - $PREFIX/lib/dotnet/dotnet --version  # [not win]
-        - dotnet --version  # [not osx]
+        - dotnet --version
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
