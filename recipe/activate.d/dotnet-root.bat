@@ -9,6 +9,7 @@ set DOTNET_TOOLS=%DOTNET_ROOT%\tools
 set DOTNET_CLI_TELEMETRY_OPTOUT=true
 set DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 set DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=false
+set DOTNET_MULTILEVEL_LOOKUP=0
 
 :: remove existing entries to prevent duplicates
 call set PATH=%%PATH:%DOTNET_ROOT%;=%%
