@@ -1,26 +1,23 @@
-cdt_name:
-- cos7
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '9'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-cuda:10.2
+- '11'
 libcurl:
 - '7'
+macos_machine:
+- x86_64-apple-darwin13.4.0
 pin_run_as_build:
   libcurl:
     max_pin: x
   zlib:
     max_pin: x.x
 target_platform:
-- linux-64
-zip_keys:
-- - cdt_name
-  - docker_image
+- osx-64
 zlib:
 - '1.2'

@@ -1,8 +1,8 @@
-{% set sdk_version = "5.0.100" %}
-{% set runtime_version = "5.0.0" %}
-{% set sha256 = "cbe223333a9724e83bd1448db30a8b5136a46a3d1c1a1f42c26e31b01523a389" %}  # [osx]
-{% set sha256 = "b8278fd20a7242e711ee46910c23804babf9b38a4c1b97e2a4d9c5155d21cbd2" %}  # [linux]
-{% set sha256 = "296c89fbfdfedb652e314342e0de069ff392db1a4b0367a2daa9554cf50c1dec" %}  # [win]
+{% set sdk_version = "5.0.201" %}
+{% set runtime_version = "5.0.4" %}
+{% set sha256 = "c7b0452f46892fb00f9a4d335ec95cffdd8d96b375cc5c509c65ce3b07b6bafa" %}  # [osx]
+{% set sha256 = "9ff77087831e8ca32719566ec9ef537e136cfc02c5ff565e53f5509cc6e7b341" %}  # [linux]
+{% set sha256 = "c99352545d5c527c0279f05f92a01c376e77319fa73f08355e5bec1d47cda1c1" %}  # [win]
 {% set platform = "linux" %}  # [linux]
 {% set platform = "osx" %}    # [osx]
 {% set platform = "win" %}    # [win]
@@ -19,8 +19,7 @@ source:
   folder: dotnet
 
 build:
-  skip: true  # [osx]
-  number: 4
+  number: 0
 
 outputs:
   - name: dotnet
@@ -33,7 +32,7 @@ outputs:
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
-        - dotnet --version
+       - dotnet --version
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
@@ -45,14 +44,14 @@ outputs:
         - posix                  # [win]
         - sysroot_linux-64 2.17  # [linux64]
       host:
-        - zlib                   # [linux]
-        - libcurl                # [linux]
+        - zlib                   # [unix]
+        - libcurl                # [unix]
         - lttng-ust              # [linux]
       run:
         - lttng-ust                 # [linux]
-        - libcurl                   # [linux]
-        - icu                       # [linux]
-        - krb5                      # [linux]
+        - libcurl                   # [unix]
+        - icu                       # [unix]
+        - krb5                      # [unix]
         - __glibc >=2.17            # [linux64]
     test:
       commands:
@@ -76,14 +75,14 @@ outputs:
         - posix                  # [win]
         - sysroot_linux-64 2.17  # [linux64]
       host:
-        - zlib                   # [linux]
-        - libcurl                # [linux]
+        - zlib                   # [unix]
+        - libcurl                # [unix]
         - lttng-ust              # [linux]
       run:
         - lttng-ust             # [linux]
-        - libcurl               # [linux]
-        - icu                   # [linux]
-        - krb5                  # [linux]
+        - libcurl               # [unix]
+        - icu                   # [unix]
+        - krb5                  # [unix]
         - __glibc >=2.17        # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -107,14 +106,14 @@ outputs:
         - posix                  # [win]
         - sysroot_linux-64 2.17  # [linux64]
       host:
-        - zlib                   # [linux]
-        - libcurl                # [linux]
+        - zlib                   # [unix]
+        - libcurl                # [unix]
         - lttng-ust              # [linux]
       run:
         - lttng-ust                 # [linux]
-        - libcurl                   # [linux]
-        - icu                       # [linux]
-        - krb5                      # [linux]
+        - libcurl                   # [unix]
+        - icu                       # [unix]
+        - krb5                      # [unix]
         - __glibc >=2.17            # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -135,7 +134,6 @@ outputs:
     requirements:                                                                     # [win]
       build:                                                                          # [win]
         - posix                                                                       # [win]
-        - sysroot_linux-64 2.17                                                       # [linux64]
       run:                                                                            # [win]
         - dotnet-runtime ={{ runtime_version }}                                       # [win]
     test:                                                                             # [win]
