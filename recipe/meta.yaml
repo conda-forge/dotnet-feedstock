@@ -1,8 +1,8 @@
-{% set sdk_version = "5.0.201" %}
-{% set runtime_version = "5.0.4" %}
-{% set sha256 = "c7b0452f46892fb00f9a4d335ec95cffdd8d96b375cc5c509c65ce3b07b6bafa" %}  # [osx]
-{% set sha256 = "9ff77087831e8ca32719566ec9ef537e136cfc02c5ff565e53f5509cc6e7b341" %}  # [linux]
-{% set sha256 = "c99352545d5c527c0279f05f92a01c376e77319fa73f08355e5bec1d47cda1c1" %}  # [win]
+{% set sdk_version = "2.1.815" %}
+{% set runtime_version = "2.1.27" %}
+{% set sha256 = "77b8da0b9d00da0284f7d6e8525d3ab65efa640e0e8b6b236fcd497b73ea0d62" %}  # [osx]
+{% set sha256 = "72d2630b67c1337aa25285da82d1b0ce5eceb3e6cfabdb12521151fd4508c626" %}  # [linux]
+{% set sha256 = "911e8a846747638dfdefe076bafb0a22384529923f1ff0a15e487234aa5919cc" %}  # [win]
 {% set platform = "linux" %}  # [linux]
 {% set platform = "osx" %}    # [osx]
 {% set platform = "win" %}    # [win]
