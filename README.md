@@ -74,6 +74,7 @@ Installing `dotnet` from the `conda-forge` channel can be achieved by adding `co
 
 ```
 conda config --add channels conda-forge
+conda config --set channel_priority strict
 ```
 
 Once the `conda-forge` channel has been enabled, `dotnet, dotnet-aspnetcore, dotnet-runtime, dotnet-sdk` can be installed with:
@@ -153,5 +154,6 @@ Feedstock Maintainers
 =====================
 
 * [@ZimmerA](https://github.com/ZimmerA/)
+* [@acesnik](https://github.com/acesnik/)
 * [@dhirschfeld](https://github.com/dhirschfeld/)
 
