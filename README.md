@@ -154,5 +154,6 @@ Feedstock Maintainers
 =====================
 
 * [@ZimmerA](https://github.com/ZimmerA/)
+* [@acesnik](https://github.com/acesnik/)
 * [@dhirschfeld](https://github.com/dhirschfeld/)
 
