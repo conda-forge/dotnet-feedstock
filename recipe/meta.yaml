@@ -1,8 +1,8 @@
-{% set sdk_version = "5.0.202" %}
-{% set runtime_version = "5.0.5" %}
-{% set sha256 = "6f270432de6c41d74f8ec19c999ae62189f253dacfd1d095131ddc10bf6d9d52" %}  # [osx]
-{% set sha256 = "d2994d4e995bbab003b2d1b137807936fd96c94ba9982822893d62904aab54cf" %}  # [linux]
-{% set sha256 = "f40261b4d443840a4924a5007c735e635873ff64999188a4edfe8640d616417b" %}  # [win]
+{% set sdk_version = "2.1.815" %}
+{% set runtime_version = "2.1.27" %}
+{% set sha256 = "77b8da0b9d00da0284f7d6e8525d3ab65efa640e0e8b6b236fcd497b73ea0d62" %}  # [osx]
+{% set sha256 = "72d2630b67c1337aa25285da82d1b0ce5eceb3e6cfabdb12521151fd4508c626" %}  # [linux]
+{% set sha256 = "911e8a846747638dfdefe076bafb0a22384529923f1ff0a15e487234aa5919cc" %}  # [win]
 {% set platform = "linux" %}  # [linux]
 {% set platform = "osx" %}    # [osx]
 {% set platform = "win" %}    # [win]
@@ -28,7 +28,7 @@ outputs:
       run:
         - {{ pin_subpackage('dotnet-runtime', exact=True) }}
         - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
-        - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
+#        - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
@@ -128,24 +128,24 @@ outputs:
         .NET Core is a free and open-source managed computer software
         framework for the Windows, Linux, and macOS operating systems.
 
-  - name: dotnet-desktop                                                              # [win]
-    version: {{ runtime_version }}                                                    # [win]
-    script: build-desktop.bat                                                         # [win]
-    requirements:                                                                     # [win]
-      build:                                                                          # [win]
-        - posix                                                                       # [win]
-      run:                                                                            # [win]
-        - dotnet-runtime ={{ runtime_version }}                                       # [win]
-    test:                                                                             # [win]
-      commands:                                                                       # [win]
-        - if not exist %PREFIX%\\dotnet\\shared\\Microsoft.WindowsDesktop.App exit 1  # [win]
-    about:                                                                            # [win]
-      home: https://github.com/dotnet/desktop                                         # [win]
-      license: MIT                                                                    # [win]
-      license_file: dotnet/LICENSE.txt                                                # [win]
-      summary: |                                                                      # [win]
-        .NET Core is a free and open-source managed computer software
-        framework for the Windows, Linux, and macOS operating systems.
+#  - name: dotnet-desktop                                                              # [win]
+#    version: {{ runtime_version }}                                                    # [win]
+#    script: build-desktop.bat                                                         # [win]
+#    requirements:                                                                     # [win]
+#      build:                                                                          # [win]
+#        - posix                                                                       # [win]
+#      run:                                                                            # [win]
+#        - dotnet-runtime ={{ runtime_version }}                                       # [win]
+#    test:                                                                             # [win]
+#      commands:                                                                       # [win]
+#        - if not exist %PREFIX%\\dotnet\\shared\\Microsoft.WindowsDesktop.App exit 1  # [win]
+#    about:                                                                            # [win]
+#      home: https://github.com/dotnet/desktop                                         # [win]
+#      license: MIT                                                                    # [win]
+#      license_file: dotnet/LICENSE.txt                                                # [win]
+#      summary: |                                                                      # [win]
+#        .NET Core is a free and open-source managed computer software
+#        framework for the Windows, Linux, and macOS operating systems.
 
 about:
   home: https://github.com/dotnet/core
