@@ -7,8 +7,6 @@ if [[ "${target_platform}" == "win-64" ]]; then
     DOTNET_ROOT="${PREFIX}/dotnet"
 else
     DOTNET_ROOT="${PREFIX}/lib/dotnet"
-    cp $RECIPE_DIR/dotnet.bash $PREFIX/bin/dotnet
-    chmod +x $PREFIX/bin/dotnet
 fi
 
 mkdir -p "${DOTNET_ROOT}/shared"
@@ -20,5 +18,5 @@ cp -r ./dotnet/host/ "${DOTNET_ROOT}/host/"
 
 mkdir -p "${PREFIX}/etc/conda/activate.d"
 mkdir -p "${PREFIX}/etc/conda/deactivate.d"
-cp -r "${RECIPE_DIR}/activate.d/" "${PREFIX}/etc/conda/"
-cp -r "${RECIPE_DIR}/deactivate.d/" "${PREFIX}/etc/conda/"
+cp -r "${RECIPE_DIR}/activate.d/." "${PREFIX}/etc/conda/"
+cp -r "${RECIPE_DIR}/deactivate.d/." "${PREFIX}/etc/conda/"
