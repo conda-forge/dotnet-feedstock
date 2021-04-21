@@ -19,7 +19,7 @@ source:
   folder: dotnet
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: dotnet
@@ -55,8 +55,7 @@ outputs:
         - __glibc >=2.17            # [linux64]
     test:
       commands:
-        - test -f $PREFIX/lib/dotnet/dotnet                 # [not win]
-        - if not exist %PREFIX%\\dotnet\\dotnet.exe exit 1  # [win]
+        - dotnet --list-runtimes
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
