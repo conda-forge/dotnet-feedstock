@@ -3,9 +3,11 @@
 {% set sha256 = "0008988f83c795bbccece69934e0e85f023a180fbc6d863687ce00ce640d89c7" %}  # [osx]
 {% set sha256 = "6614d20de63b68156979e76c5df8a810560c480a0f77fa7afd90055131612a7e" %}  # [linux]
 {% set sha256 = "ca60e96b0f68e84424d4c76b3864abe9a4e675ee9fddca09fdf2989a5fadc0b4" %}  # [win]
-{% set platform = "linux" %}  # [linux]
-{% set platform = "osx" %}    # [osx]
-{% set platform = "win" %}    # [win]
+{% set sha256 = "223ea6d24318bf2d5e7efe980d42cad183994e026a4fd2a42060266a1b0bf8d5" %}  # [aarch64]
+{% set platform = "linux-x64" %}  # [linux]
+{% set platform = "osx-x64" %}    # [osx]
+{% set platform = "win-x64" %}    # [win]
+{% set platform = "linux-arm64" %}    # [aarch64]
 {% set ext = "tar.gz" %}      # [not win]
 {% set ext = "zip" %}         # [win]
 
@@ -14,12 +16,12 @@ package:
   version: {{ sdk_version }}
 
 source:
-  url: https://dotnetcli.azureedge.net/dotnet/Sdk/{{ sdk_version }}/dotnet-sdk-{{ sdk_version }}-{{ platform }}-x64.{{ ext }}
+  url: https://dotnetcli.azureedge.net/dotnet/Sdk/{{ sdk_version }}/dotnet-sdk-{{ sdk_version }}-{{ platform }}.{{ ext }}
   sha256: {{ sha256 }}
   folder: dotnet
 
 build:
-  number: 1
+  number: 2 
 
 outputs:
   - name: dotnet
