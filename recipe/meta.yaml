@@ -48,9 +48,9 @@ outputs:
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
-        - lttng-ust              # [linux]
+        - lttng-ust              # [linux64]
       run:
-        - lttng-ust                 # [linux]
+        - lttng-ust                 # [linux64]
         - libcurl                   # [unix]
         - icu                       # [unix]
         - krb5                      # [unix]
@@ -78,9 +78,9 @@ outputs:
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
-        - lttng-ust              # [linux]
+        - lttng-ust              # [linux64]
       run:
-        - lttng-ust             # [linux]
+        - lttng-ust             # [linux64]
         - libcurl               # [unix]
         - icu                   # [unix]
         - krb5                  # [unix]
@@ -109,9 +109,9 @@ outputs:
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
-        - lttng-ust              # [linux]
+        - lttng-ust              # [linux64]
       run:
-        - lttng-ust                 # [linux]
+        - lttng-ust                 # [linux64]
         - libcurl                   # [unix]
         - icu                       # [unix]
         - krb5                      # [unix]
