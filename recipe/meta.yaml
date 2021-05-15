@@ -1,9 +1,9 @@
-{% set sdk_version = "3.1.408" %}
-{% set runtime_version = "3.1.14" %}
-{% set sha256 = "0008988f83c795bbccece69934e0e85f023a180fbc6d863687ce00ce640d89c7" %}  # [osx]
-{% set sha256 = "6614d20de63b68156979e76c5df8a810560c480a0f77fa7afd90055131612a7e" %}  # [linux]
-{% set sha256 = "ca60e96b0f68e84424d4c76b3864abe9a4e675ee9fddca09fdf2989a5fadc0b4" %}  # [win]
-{% set sha256 = "223ea6d24318bf2d5e7efe980d42cad183994e026a4fd2a42060266a1b0bf8d5" %}  # [aarch64]
+{% set sdk_version = "3.1.409" %}
+{% set runtime_version = "3.1.15" %}
+{% set sha256 = "de629b4a3a74ef43701e543d00803b0963047bd8b0234d83c9229d53dab00ba0" %}  # [osx]
+{% set sha256 = "e0f4b47533bbf7529e3d9b1239ebf37ff8f332a4a056978131ed30bde0b8cd55" %}  # [linux]
+{% set sha256 = "fa72fe24d0466c8fd4805e9f7c2248986e56a9d0608f4943f86a75e9c5d297eb" %}  # [win]
+{% set sha256 = "45a6f9e2071093aaf00948e4602729895071c507ab88936a07abe43a3f0cd667" %}  # [aarch64]
 {% set platform = "linux-x64" %}  # [linux]
 {% set platform = "osx-x64" %}    # [osx]
 {% set platform = "win-x64" %}    # [win]
@@ -21,7 +21,7 @@ source:
   folder: dotnet
 
 build:
-  number: 2 
+  number: 0 
 
 outputs:
   - name: dotnet
