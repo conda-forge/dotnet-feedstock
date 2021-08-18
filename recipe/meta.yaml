@@ -21,7 +21,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1 
+  number: 0 
 
 outputs:
   - name: dotnet
