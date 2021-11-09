@@ -90,7 +90,8 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - dotnet --version
+        - dotnet --version                   # [not aarch64]
+        - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
