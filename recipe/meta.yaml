@@ -88,8 +88,8 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - if [[ "${HOST_PLATFORM}" == "${BUILD_PLATFORM}" ]] dotnet --version
-    about:
+        - dotnet --version                   # [not aarch64]
+        - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
       home: https://github.com/dotnet/sdk
       license: MIT
       license_file: dotnet/LICENSE.txt
