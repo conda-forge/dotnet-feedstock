@@ -58,8 +58,8 @@ outputs:
     test:
       commands:
         - dotnet --list-runtimes
-        - (! test -z $DOTNET_ROOT)            # [unix]
-        - (! test -z $DOTNET_TOOLS)           # [unix]
+        - (! test -z "${DOTNET_ROOT}")            # [unix]
+        - (! test -z "${DOTNET_TOOLS}")           # [unix]
         - if not defined DOTNET_ROOT exit 1   # [win]
         - if not defined DOTNET_TOOLS exit 1  # [win]
     about:
