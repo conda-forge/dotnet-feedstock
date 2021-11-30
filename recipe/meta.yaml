@@ -58,8 +58,8 @@ outputs:
     test:
       commands:
         - dotnet --list-runtimes
-        - test -z "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"         # [unix]
-        - test -z "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
+        - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"         # [unix]
+        - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
         - if not defined DOTNET_ROOT exit 1   # [win]
         - if not defined DOTNET_TOOLS exit 1  # [win]
     about:
