@@ -21,7 +21,7 @@ source:
   folder: dotnet
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: dotnet
@@ -58,6 +58,10 @@ outputs:
     test:
       commands:
         - dotnet --list-runtimes
+        - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"         # [unix]
+        - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
+        - if not defined DOTNET_ROOT exit 1   # [win]
+        - if not defined DOTNET_TOOLS exit 1  # [win]
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
