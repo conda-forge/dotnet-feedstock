@@ -1,10 +1,10 @@
-{% set sdk_version = "6.0.100" %}
-{% set runtime_version = "6.0.0" %}
-{% set sha256 = "0745d5074c0aee382b194fa9373f670f7bb1917a9cbe7fe93a4f0510009150f " %}  # [aarch64]
-{% set sha256 = "8489a798fcd904a32411d64636e2747edf108192e0b65c6c3ccfb0d302da5ecb" %}  # [linux]
-{% set sha256 = "140afd65da6bb4655f2b6ea92797bccaaacb24c5db6e26b2ccf3ea41ec71ce56" %}  # [arm64]
-{% set sha256 = "6938e387b3e0c059683ef6ffb4c3ef726189ea88134462666cd6e346ad41294a" %}  # [osx]
-{% set sha256 = "21422989e10fb7ed46e639fc4eccef4b6d09eff842b3f517e80f5569567f4852" %}  # [win]
+{% set sdk_version = "6.0.101" %}
+{% set runtime_version = "6.0.1" %}
+{% set sha256 = "f6b6e7a8a588e5864e08e149d530bbc463f6c19eb648bdd8b27e1545d363a087" %}  # [aarch64]
+{% set sha256 = "95a1b5360b234e926f12327d68c4a0d7b7206134dca1b570a66dc7a8a4aed705" %}  # [linux]
+{% set sha256 = "db13183a7c5c1ff1d8423c76ce3737447d7d51f0ee37b4ee533250603499f537" %}  # [arm64]
+{% set sha256 = "283dc6e8a88bdcb93f26abb06dd73492aefe55caa27b84d112138b22ab2cf588" %}  # [osx]
+{% set sha256 = "2954575322680f5ab31998a9412af0a2a66b73c2cf5a5d8007221a96fbcf2e8d" %}  # [win]
 {% set platform = "linux-arm64" %}    # [aarch64]
 {% set platform = "linux-x64" %}  # [linux]
 {% set platform = "osx-arm64" %}  # [arm64]
@@ -23,7 +23,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1
+  number: 0
   binary_relocation: False  # [osx]
 
 outputs:
@@ -61,6 +61,10 @@ outputs:
     test:
       commands:
         - dotnet --list-runtimes
+        #- test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"         # [unix]
+        #- test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
+        #- if not defined DOTNET_ROOT exit 1   # [win]
+        #- if not defined DOTNET_TOOLS exit 1  # [win]
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
