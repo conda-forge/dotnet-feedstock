@@ -1,7 +1,14 @@
 $env:_CONDA_BACKUP_DOTNET_ROOT = $env:DOTNET_ROOT
 $env:_CONDA_BACKUP_DOTNET_TOOLS = $env:DOTNET_TOOLS
 
-$env:DOTNET_ROOT = Join-Path $env:CONDA_PREFIX dotnet
+if ([System.Environment]::OSVersion.Platform -eq "Unix") 
+{
+    $env:DOTNET_ROOT = Join-Path $env:CONDA_PREFIX lib dotnet 
+}
+else 
+{ 
+    $env:DOTNET_ROOT = Join-Path $env:CONDA_PREFIX dotnet 
+}
 $env:DOTNET_TOOLS = Join-Path $env:DOTNET_ROOT tools
 
 $env:DOTNET_CLI_TELEMETRY_OPTOUT='true'
