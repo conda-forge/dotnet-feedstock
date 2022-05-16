@@ -1,9 +1,9 @@
-{% set sdk_version = "3.1.417" %}
-{% set runtime_version = "3.1.23" %}
-{% set sha256 = "2f30e33e1016b04685992a5a51f49eb0541e940bef715b8139594022ab423385" %}  # [aarch64]
-{% set sha256 = "5d077715abc10b4a4dcee8c88d18b21cbb656f7eb67c3454bf33d791a35309e3" %}  # [linux]
-{% set sha256 = "73b3ef667ef0a8215868aae7b3995a7982f3491b5fb27cb9ab8afa0ac5ccbe99" %}  # [osx]
-{% set sha256 = "8d7b82eb50ed5034ddc9dcc22ec254918573b07f7381fb647c84641d045b08ac" %}  # [win]
+{% set sdk_version = "3.1.418" %}
+{% set runtime_version = "3.1.24" %}
+{% set sha256 = "31f778953042afee49af4f7300900c8d11e2fd2d6aee5288167e752162e507fe" %}  # [aarch64]
+{% set sha256 = "c2c45041d1556045fcc63d6351f887a6dff2e009a46f91ba413a63accd86244b" %}  # [linux]
+{% set sha256 = "792ff0fec18f841e2e4d3c19638b7d4a319e013068a86d49a7c5e357366bcaf1" %}  # [osx]
+{% set sha256 = "2422a5b3986aa9ebd1d304822024d58d77a6a11413f84aabbce2eb5ef3c7b3a2" %}  # [win]
 {% set platform = "linux-arm64" %}    # [aarch64]
 {% set platform = "linux-x64" %}  # [linux]
 {% set platform = "osx-x64" %}    # [osx]
@@ -164,3 +164,4 @@ extra:
   recipe-maintainers:
     - dhirschfeld
     - ZimmerA
+    - acesnik
