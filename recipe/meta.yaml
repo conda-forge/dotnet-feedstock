@@ -21,6 +21,7 @@ source:
   folder: dotnet
 
 build:
+  skip: True  # [osx]
   number: 0 
 
 outputs:
