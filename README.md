@@ -78,6 +78,7 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-dotnet-green.svg)](https://anaconda.org/conda-forge/dotnet) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dotnet.svg)](https://anaconda.org/conda-forge/dotnet) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dotnet.svg)](https://anaconda.org/conda-forge/dotnet) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dotnet.svg)](https://anaconda.org/conda-forge/dotnet) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-dotnet--aspnetcore-green.svg)](https://anaconda.org/conda-forge/dotnet-aspnetcore) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dotnet-aspnetcore.svg)](https://anaconda.org/conda-forge/dotnet-aspnetcore) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dotnet-aspnetcore.svg)](https://anaconda.org/conda-forge/dotnet-aspnetcore) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dotnet-aspnetcore.svg)](https://anaconda.org/conda-forge/dotnet-aspnetcore) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-dotnet--desktop-green.svg)](https://anaconda.org/conda-forge/dotnet-desktop) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dotnet-desktop.svg)](https://anaconda.org/conda-forge/dotnet-desktop) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dotnet-desktop.svg)](https://anaconda.org/conda-forge/dotnet-desktop) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dotnet-desktop.svg)](https://anaconda.org/conda-forge/dotnet-desktop) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-dotnet--runtime-green.svg)](https://anaconda.org/conda-forge/dotnet-runtime) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dotnet-runtime.svg)](https://anaconda.org/conda-forge/dotnet-runtime) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dotnet-runtime.svg)](https://anaconda.org/conda-forge/dotnet-runtime) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dotnet-runtime.svg)](https://anaconda.org/conda-forge/dotnet-runtime) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-dotnet--sdk-green.svg)](https://anaconda.org/conda-forge/dotnet-sdk) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/dotnet-sdk.svg)](https://anaconda.org/conda-forge/dotnet-sdk) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/dotnet-sdk.svg)](https://anaconda.org/conda-forge/dotnet-sdk) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/dotnet-sdk.svg)](https://anaconda.org/conda-forge/dotnet-sdk) |
 
@@ -91,16 +92,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `dotnet, dotnet-aspnetcore, dotnet-runtime, dotnet-sdk` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `dotnet, dotnet-aspnetcore, dotnet-desktop, dotnet-runtime, dotnet-sdk` can be installed with `conda`:
 
 ```
-conda install dotnet dotnet-aspnetcore dotnet-runtime dotnet-sdk
+conda install dotnet dotnet-aspnetcore dotnet-desktop dotnet-runtime dotnet-sdk
 ```
 
 or with `mamba`:
 
 ```
-mamba install dotnet dotnet-aspnetcore dotnet-runtime dotnet-sdk
+mamba install dotnet dotnet-aspnetcore dotnet-desktop dotnet-runtime dotnet-sdk
 ```
 
 It is possible to list all of the versions of `dotnet` available on your platform with `conda`:
