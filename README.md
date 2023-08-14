@@ -3,6 +3,7 @@ About dotnet-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/dotnet-feedstock/blob/main/LICENSE.txt)
 
+
 About dotnet
 ------------
 
@@ -13,6 +14,7 @@ Package license: MIT
 Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
+
 About dotnet-runtime
 --------------------
 
@@ -22,6 +24,7 @@ Package license: MIT
 
 Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
+
 
 About dotnet-aspnetcore
 -----------------------
@@ -36,6 +39,7 @@ framework for the Windows, Linux, and macOS operating systems.
 .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
+
 About dotnet-sdk
 ----------------
 
@@ -45,6 +49,7 @@ Package license: MIT
 
 Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
+
 
 About dotnet-desktop
 --------------------
