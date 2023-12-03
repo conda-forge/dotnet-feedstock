@@ -58,6 +58,7 @@ outputs:
         - icu                       # [unix]
         - krb5                      # [unix]
         - __glibc >=2.17            # [linux64]
+        - libgcc=5.2.0              # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
