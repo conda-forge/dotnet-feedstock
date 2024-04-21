@@ -36,9 +36,6 @@ Package license: MIT
 Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
-.NET Core is a free and open-source managed computer software
-framework for the Windows, Linux, and macOS operating systems.
-
 
 About dotnet-sdk
 ----------------
@@ -84,13 +81,6 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=10980&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/dotnet-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=10980&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/dotnet-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
