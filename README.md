@@ -36,9 +36,6 @@ Package license: MIT
 Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
-.NET Core is a free and open-source managed computer software
-framework for the Windows, Linux, and macOS operating systems.
-
 
 About dotnet-sdk
 ----------------
