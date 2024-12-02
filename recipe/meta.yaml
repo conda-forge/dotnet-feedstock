@@ -47,8 +47,8 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -58,7 +58,6 @@ outputs:
         - libcurl                   # [unix]
         - icu                       # [unix]
         - krb5                      # [unix]
-        - __glibc >=2.17            # [linux64]
     test:
       commands:
         - dotnet --list-runtimes
@@ -81,8 +80,8 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -92,7 +91,6 @@ outputs:
         - libcurl               # [unix]
         - icu                   # [unix]
         - krb5                  # [unix]
-        - __glibc >=2.17        # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
@@ -124,7 +122,6 @@ outputs:
         - libcurl                   # [unix]
         - icu                       # [unix]
         - krb5                      # [unix]
-        - __glibc >=2.17            # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
