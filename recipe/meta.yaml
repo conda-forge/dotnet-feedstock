@@ -48,7 +48,6 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -83,7 +82,6 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -116,7 +114,6 @@ outputs:
         - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
