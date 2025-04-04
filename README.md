@@ -55,9 +55,7 @@ Home: https://github.com/dotnet/desktop
 
 Package license: MIT
 
-Summary: .NET Core is a free and open-source managed computer software
-framework for the Windows, Linux, and macOS operating systems.
-
+Summary: .NET Core is a free and open-source managed computer software framework for the Windows, Linux, and macOS operating systems.
 
 Current build status
 ====================
