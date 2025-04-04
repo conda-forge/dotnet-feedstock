@@ -13,6 +13,6 @@ docker_image:
 libcurl:
 - '8'
 target_platform:
-- linux-64
+- linux-aarch64
 zlib:
 - '1'
