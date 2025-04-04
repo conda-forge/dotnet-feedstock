@@ -45,9 +45,10 @@ outputs:
     script: build-runtime.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -79,9 +80,10 @@ outputs:
     script: build-sdk.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -111,9 +113,10 @@ outputs:
     script: build-aspnetcore.sh     # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
