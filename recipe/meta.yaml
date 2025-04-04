@@ -1,10 +1,10 @@
-{% set sdk_version = "6.0.420" %}
-{% set runtime_version = "6.0.28" %}
-{% set sha256 = "bdb39576bde027736200a636fecd116ddbef02b3249b96c6e129dda040198654" %}  # [aarch64]
-{% set sha256 = "d6ed3530d0d01a5b2210c5ee7eb9ffb8510b6cdb94fe41704eb72e2543a5bbc7" %}  # [linux]
-{% set sha256 = "f2e57cb199a00d9d4cabd04dde23445dda78bca30cc6fa758a0ef1fb7a9d1a21" %}  # [arm64]
-{% set sha256 = "4133c173b22ee4e9459ccf795eab77f1dfe2e81f874392e0e1a7ccbecaf7d6a1" %}  # [osx]
-{% set sha256 = "f38a449c0f83a9854d520f068f53121ddc7d7849e8db56d80e4bb1ebd9a25d15" %}  # [win]
+{% set sdk_version = "6.0.428" %}
+{% set runtime_version = "6.0.36" %}
+{% set sha256 = "b5956b0d9ab3063c2886ec74adc953394e81a1aa3f5075c6b41b3e4f1d7a53f9" %}  # [aarch64]
+{% set sha256 = "9b2f9b91e28677b58e47d34a1d9e2a88f597af1f6acd44764a3abc2f1bacdc8a" %}  # [linux]
+{% set sha256 = "7844622c71ecc575f297f29ca3e2d8d84ee53185076a811acebdc39d13373c1e" %}  # [arm64]
+{% set sha256 = "da1fde6896a4d84dfa8024fab1abe54a56e02899b85a8600c2ed16ece0543562" %}  # [osx]
+{% set sha256 = "f8fcf93b33fff9a7182b9abd8b8148cdaa75000e841fa12d79285bd712d2a708" %}  # [win]
 {% set platform = "linux-arm64" %}    # [aarch64]
 {% set platform = "linux-x64" %}  # [linux]
 {% set platform = "osx-arm64" %}  # [arm64]
@@ -45,9 +45,10 @@ outputs:
     script: build-runtime.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -79,9 +80,10 @@ outputs:
     script: build-sdk.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -111,9 +113,10 @@ outputs:
     script: build-aspnetcore.sh     # [not win]
     requirements:
       build:
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
+        - sysroot  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
