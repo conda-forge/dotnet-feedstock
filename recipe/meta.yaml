@@ -25,6 +25,7 @@ source:
 build:
   number: 1
   binary_relocation: False  # [osx]
+  skip: True  # [win]
 
 outputs:
   - name: dotnet
