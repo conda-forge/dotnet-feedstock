@@ -48,7 +48,6 @@ outputs:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix                  # [win]
-        # - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -83,7 +82,6 @@ outputs:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix                  # [win]
-        # - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -116,7 +114,6 @@ outputs:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix                  # [win]
-        # - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -156,8 +153,8 @@ outputs:
       license: MIT                                                                    # [win]
       license_file: dotnet/LICENSE.txt                                                # [win]
       summary: |                                                                      # [win]
-        .NET Core is a free and open-source managed computer software
-        framework for the Windows, Linux, and macOS operating systems.
+        .NET Core is a free and open-source managed computer software                 # [win]
+        framework for the Windows, Linux, and macOS operating systems.                # [win]
 
 about:
   home: https://github.com/dotnet/core
