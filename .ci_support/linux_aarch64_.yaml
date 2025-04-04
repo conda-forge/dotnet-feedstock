@@ -1,3 +1,7 @@
+c_stdlib:
+- sysroot
+c_stdlib_version:
+- '2.17'
 cdt_name:
 - conda
 channel_sources:
@@ -16,9 +20,3 @@ target_platform:
 - linux-aarch64
 zlib:
 - '1'
-build_platform:
-- linux-64
-CMAKE_CROSSCOMPILING_EMULATOR: 
-- /usr/bin/qemu-aarch64-static
-CROSSCOMPILING_EMULATOR: 
-- /usr/bin/qemu-aarch64-static
