@@ -83,6 +83,8 @@ outputs:
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
     build:
+      missing_dso_whitelist:
+        - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
         - libcurl  # [linux]
         - lttng-ust  # [linux]
