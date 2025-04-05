@@ -1,10 +1,10 @@
-{% set sdk_version = "7.0.404" %}
-{% set runtime_version = "7.0.14" %}
-{% set sha256 = "097b44412b10ec090ecf2716cddd6452e2c8467e67d42a9fae78264e578f61ee" %}  # [aarch64]
-{% set sha256 = "f57fb1c4f2cb1fa0310a4140bab22494add5b837f43aa25380fc84f98107a0d0" %}  # [linux]
-{% set sha256 = "88e75c15f78d72f57038db6f49dc7274de507aea5f239de64a082bfb86131e03" %}  # [arm64]
-{% set sha256 = "a7603bb0d3e9aa695edb7fd0663cad0e924fe0ee3ab836c5bf42198588a700fe" %}  # [osx]
-{% set sha256 = "cbe319dd9536ca0e31b7b6127303525bac1b411227c71308fc8009d63a695223" %}  # [win]
+{% set sdk_version = "7.0.410" %}
+{% set runtime_version = "7.0.20" %}
+{% set sha256 = "482b232ce9d69b3bb2c18fd52498507d86455476b36e165157c496ed302fce72" %}  # [aarch64]
+{% set sha256 = "acc4047f48cc0d401ed51f8d1c02c801f9e1c58b80c137cb13fd4bee316308a9" %}  # [linux]
+{% set sha256 = "2c470a56c7e951277ad91ce53b91226c153214e172f8bf2db0e7672a3d32dfb6" %}  # [arm64]
+{% set sha256 = "a657347cebdef932119446dfabe0f9d992b7d96929eadfb8ad8177bbd33b632a" %}  # [osx]
+{% set sha256 = "7da7134c00dbb4f789111f6369eb68bc9d0fd5109380afa2a45c0f079c998b0b" %}  # [win]
 {% set platform = "linux-arm64" %}    # [aarch64]
 {% set platform = "linux-x64" %}  # [linux]
 {% set platform = "osx-arm64" %}  # [arm64]
@@ -45,9 +45,9 @@ outputs:
     script: build-runtime.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -79,9 +79,9 @@ outputs:
     script: build-sdk.sh        # [not win]
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
@@ -111,9 +111,9 @@ outputs:
     script: build-aspnetcore.sh     # [not win]
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
         - posix                  # [win]
-        - sysroot_linux-64 2.17  # [linux64]
       host:
         - zlib                   # [unix]
         - libcurl                # [unix]
