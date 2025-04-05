@@ -1,10 +1,10 @@
-{% set sdk_version = "8.0.302" %}
-{% set runtime_version = "8.0.6" %}
-{% set sha256 = "8cc5b1216e0ef019199bbe5907cbe24d6110a6fd4c836c6892349a4532184337" %}  # [linux-aarch64]
-{% set sha256 = "8c84340e7bbbe478463debb9230e18d5b1a94583c2ebc04eb28a39a232b37f55" %}  # [linux-64]
-{% set sha256 = "0a786792c6ff41a7cf3c5d43bc2bbffe4a96a9c9df709cb816111ff670d33eb9" %}  # [arm64]
-{% set sha256 = "183d575fe4604cac142145204f202857ceaf6dcda5a21e7d04df2b719d44d761" %}  # [osx]
-{% set sha256 = "ddb7dc983df37b20bd03b57c27c1ecdc3eee8f7187cca9d6498023381f912dc0" %}  # [win]
+{% set sdk_version = "8.0.407" %}
+{% set runtime_version = "8.0.14" %}
+{% set sha256 = "02f63fbc16459ee2cf989c42160efb8c62039c3f042133d07245cd7f4466bfbd" %}  # [linux-aarch64]
+{% set sha256 = "99122db4459e0e6a7d55db2c738cfd1422a5357b9da2c050f0250eb33e939c7f" %}  # [linux-64]
+{% set sha256 = "7086d6d6dcdc0ddd7865266cf6b67cad85469c3a2f35fbbfd9ae92aaed4fce3a" %}  # [arm64]
+{% set sha256 = "98c4f7416f2b0503f49801dcb09f9cd1eb083ee50aba1adab2a1a7b0fa469727" %}  # [osx]
+{% set sha256 = "0f4c782a0a3a7dc92493215a47691f6c112fa90c77d1e37dbd05a7f05fd200b0" %}  # [win]
 {% set platform = "linux-arm64" %}    # [linux-aarch64]
 {% set platform = "linux-x64" %}  # [linux-64]
 {% set platform = "osx-arm64" %}  # [arm64]
@@ -23,7 +23,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1
+  number: 0
   binary_relocation: False  # [osx]
 
 outputs:
@@ -46,7 +46,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
@@ -80,7 +80,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
@@ -112,7 +112,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
-        - {{ stdlib("c") }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
