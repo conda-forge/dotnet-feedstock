@@ -130,19 +130,19 @@ outputs:
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
     requirements:
-      build:
+      #build:
         # - {{ compiler('cxx') }}
         # - {{ stdlib('c') }}
         # - posix  # [win]
-      host:
+      #host:
         # - zlib  # [unix]
         # - libcurl  # [unix]
         # - lttng-ust  # [linux64]
       run:
+        - dotnet-runtime ={{ runtime_version }}
         # - lttng-ust  # [linux64]
         # - libcurl  # [unix]
         # - icu  # [unix]
-        - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
         - test -d $PREFIX/lib/dotnet/shared/Microsoft.AspNetCore.App  # [not win]
