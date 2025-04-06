@@ -31,9 +31,9 @@ outputs:
     version: {{ sdk_version }}
     requirements:
       run:
-        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
         - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
         - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
+        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
@@ -58,13 +58,13 @@ outputs:
         - {{ stdlib('c') }}
         - posix  # [win]
       host:
+        - libcurl  # [unix]
+        - lttng-ust  # [linux64]
         - zlib  # [unix]
-        - libcurl  # [unix]
-        - lttng-ust  # [linux64]
       run:
-        - lttng-ust  # [linux64]
-        - libcurl  # [unix]
         - icu  # [unix]
+        - libcurl  # [unix]
+        - lttng-ust  # [linux64]
     test:
       commands:
         - dotnet --list-runtimes
@@ -98,7 +98,6 @@ outputs:
         - {{ stdlib('c') }}
         - posix  # [win]
       host:
-        - icu  # [unix]
         - libcurl  # [unix]
         - lttng-ust  # [linux64]
         - zlib  # [unix]
@@ -111,12 +110,14 @@ outputs:
       commands:
         - dotnet --version  # [not aarch64]
         - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && if [ $? -ne 0 ]; then exit 1; fi && (dotnet exec "bin/Debug/net8.0/self-test.dll" | grep "Hello, World!")  # [unix]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && if errorlevel 1 exit 1 && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
+        - export DOTNET_EnableMacOSCodeSign=false  # [osx]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" >& self-test.txt  # [unix]
+        - grep "Hello, World!" self-test/self-test.txt  # [unix]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
         - renode-cli
-      files:
-        - self-test/
+      requires:
+        - icu  # [unix]
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
