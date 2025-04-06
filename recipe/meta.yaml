@@ -111,7 +111,7 @@ outputs:
       commands:
         - dotnet --version  # [not aarch64]
         - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
-        - cd self-test/ConsoleApp && dotnet build && dotnet exec "bin/Debug/net8.0/ConsoleApp.dll" | grep "Hello, World!"
+        - cd self-test/ConsoleApp && dotnet build && if [ $? -ne 0 ]; then exit 1; fi && dotnet exec "bin/Debug/net8.0/ConsoleApp.dll" | grep "Hello, World!"
       downstreams:
         - renode-cli
       files:
