@@ -48,8 +48,10 @@ outputs:
         - "$RPATH/liblttng-ust.so.0"  # [linux]
         - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
-        - libcurl  # [linux]
+        - libcurl  # [unix]
         - lttng-ust  # [linux]
+        - libcxx  # [osx]
+        - libzlib  # [osx]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -86,8 +88,10 @@ outputs:
       missing_dso_whitelist:
         - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
-        - libcurl  # [linux]
+        - libcurl  # [unix]
         - lttng-ust  # [linux]
+        - libcxx  # [osx]
+        - libzlib  # [osx]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -123,23 +127,19 @@ outputs:
     version: {{ runtime_version }}
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
-    build:
-      ignore_run_exports:
-        - libcurl  # [linux]
-        - lttng-ust  # [linux]
     requirements:
       build:
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
-        - posix  # [win]
+        # - {{ compiler('cxx') }}
+        # - {{ stdlib('c') }}
+        # - posix  # [win]
       host:
-        - zlib  # [unix]
-        - libcurl  # [unix]
-        - lttng-ust  # [linux64]
+        # - zlib  # [unix]
+        # - libcurl  # [unix]
+        # - lttng-ust  # [linux64]
       run:
-        - lttng-ust  # [linux64]
-        - libcurl  # [unix]
-        - icu  # [unix]
+        # - lttng-ust  # [linux64]
+        # - libcurl  # [unix]
+        # - icu  # [unix]
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
