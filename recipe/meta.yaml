@@ -49,9 +49,9 @@ outputs:
         - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
         - libcurl  # [unix]
-        - lttng-ust  # [linux]
         - libcxx  # [osx]
         - libzlib  # [osx]
+        - lttng-ust  # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -89,23 +89,24 @@ outputs:
         - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
         - libcurl  # [unix]
-        - lttng-ust  # [linux]
         - libcxx  # [osx]
         - libzlib  # [osx]
+        - lttng-ust  # [linux]
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix  # [win]
       host:
-        - zlib  # [unix]
-        - libcurl  # [unix]
-        - lttng-ust  # [linux64]
-      run:
-        - lttng-ust  # [linux64]
-        - libcurl  # [unix]
         - icu  # [unix]
+        - libcurl  # [unix]
+        - lttng-ust  # [linux64]
+        - zlib  # [unix]
+      run:
         - dotnet-runtime ={{ runtime_version }}
+        - icu  # [unix]
+        - lttng-ust  # [linux64]
+        - libcurl  # [unix]
     test:
       commands:
         - dotnet --version  # [not aarch64]
