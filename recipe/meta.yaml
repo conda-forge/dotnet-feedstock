@@ -37,7 +37,7 @@ outputs:
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
-       - dotnet --version
+        - dotnet --version
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
@@ -113,7 +113,7 @@ outputs:
         - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
         - cd self-test/ConsoleApp && dotnet build && if [ $? -ne 0 ]; then exit 1; fi && dotnet exec "bin/Debug/net8.0/ConsoleApp.dll" | grep "Hello, World!"
         - cd self-test\ConsoleApp && dotnet build && if errorlevel 1 exit 1 && dotnet exec "bin/Debug/net8.0/ConsoleApp.dll" | findstr "Hello, World!"
-        downstreams:
+      downstreams:
         - renode-cli
       files:
         - self-test/
@@ -130,19 +130,8 @@ outputs:
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
     requirements:
-      #build:
-        # - {{ compiler('cxx') }}
-        # - {{ stdlib('c') }}
-        # - posix  # [win]
-      #host:
-        # - zlib  # [unix]
-        # - libcurl  # [unix]
-        # - lttng-ust  # [linux64]
       run:
         - dotnet-runtime ={{ runtime_version }}
-        # - lttng-ust  # [linux64]
-        # - libcurl  # [unix]
-        # - icu  # [unix]
     test:
       commands:
         - test -d $PREFIX/lib/dotnet/shared/Microsoft.AspNetCore.App  # [not win]
