@@ -38,6 +38,12 @@ outputs:
     test:
       commands:
         - dotnet --version
+        # Same test without setting the environment variable that should be in activation
+        - DOTNET_EnableMacOSCodeSign=false mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
+        - grep "Hello, World!" self-test.txt  # [unix]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
+      downstreams:
+        - renode-cli
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
@@ -103,16 +109,13 @@ outputs:
         - zlib  # [unix]
       run:
         - dotnet-runtime ={{ runtime_version }}
-        - icu  # [unix]
-        - lttng-ust  # [linux64]
-        - libcurl  # [unix]
     test:
       commands:
         - dotnet --version  # [not aarch64]
         - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
-        - export DOTNET_EnableMacOSCodeSign=false  # [osx]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" >& self-test.txt  # [unix]
-        - grep "Hello, World!" self-test/self-test.txt  # [unix]
+        - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
+        - DOTNET_EnableMacOSCodeSign=false mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
+        - grep "Hello, World!" self-test.txt  # [unix]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
         - renode-cli
