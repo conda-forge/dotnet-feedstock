@@ -39,7 +39,7 @@ outputs:
       commands:
         - dotnet --version
         # Same test without setting the environment variable that should be in activation
-        - DOTNET_EnableMacOSCodeSign=false mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
+        - DOTNET_EnableMacOSCodeSign=false mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
         - grep "Hello, World!" self-test.txt  # [unix]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
