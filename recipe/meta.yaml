@@ -23,7 +23,7 @@ source:
   folder: dotnet
 
 build:
-  number: 0
+  number: 1
   binary_relocation: False  # [osx]
 
 outputs:

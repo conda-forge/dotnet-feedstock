@@ -1,9 +1,12 @@
+# get correct path separator for the current OS
+$pathSep = [System.IO.Path]::PathSeparator
+
 $path = (
-    $env:PATH.Split(';') `
+    $env:PATH.Split($pathSep) `
     | Where-Object { $_ -ne $env:DOTNET_ROOT } `
     | Where-Object { $_ -ne $env:DOTNET_TOOLS } `
 )
-$env:PATH = $path -join ';'
+$env:PATH = $path -join $pathSep
 
 $env:DOTNET_CLI_TELEMETRY_OPTOUT=''
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE=''
