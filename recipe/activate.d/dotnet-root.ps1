@@ -17,11 +17,14 @@ $env:DOTNET_ADD_GLOBAL_TOOLS_TO_PATH='false'
 $env:DOTNET_MULTILEVEL_LOOKUP=0
 $env:DOTNET_NOLOGO=1
 
+# get correct path separator for the current OS
+$pathSep = [System.IO.Path]::PathSeparator
+
 # remove existing entries to prevent duplicates
 $path = @($env:DOTNET_ROOT, ${env:DOTNET_TOOLS})
 $path += (
-    $env:PATH.Split(';') `
+    $env:PATH.Split($pathSep) `
     | Where-Object { $_ -ne $env:DOTNET_ROOT } `
     | Where-Object { $_ -ne $env:DOTNET_TOOLS } `
 )
-$env:PATH = $path -join ';'
+$env:PATH = $path -join $pathSep
