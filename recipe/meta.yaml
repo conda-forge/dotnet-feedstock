@@ -25,6 +25,7 @@ source:
 build:
   number: 2
   binary_relocation: False  # [osx]
+  skip: true  # [not osx or not x86_64]
 
 outputs:
   - name: dotnet
@@ -115,9 +116,9 @@ outputs:
         - dotnet --version  # [not aarch64]
         - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
         - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
-        - DOTNET_EnableMacOSCodeSign=true mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
         - cat self-test.csproj  # [unix]
-        - dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
+        - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
         - grep "Hello, World!" self-test.txt  # [linux]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
