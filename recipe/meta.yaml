@@ -23,7 +23,7 @@ source:
   folder: dotnet
 
 build:
-  number: 0
+  number: 1
   binary_relocation: False  # [osx]
 
 outputs:
@@ -41,12 +41,13 @@ outputs:
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
-    script: build-runtime.bat       # [win]
-    script: build-runtime.sh        # [not win]
+    script: build-runtime.bat  # [win]
+    script: build-runtime.sh  # [not win]
     requirements:
       build:
         - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
@@ -75,12 +76,13 @@ outputs:
 
   - name: dotnet-sdk
     version: {{ sdk_version }}
-    script: build-sdk.bat       # [win]
-    script: build-sdk.sh        # [not win]
+    script: build-sdk.bat  # [win]
+    script: build-sdk.sh  # [not win]
     requirements:
       build:
         - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
@@ -107,12 +109,13 @@ outputs:
 
   - name: dotnet-aspnetcore
     version: {{ runtime_version }}
-    script: build-aspnetcore.bat    # [win]
-    script: build-aspnetcore.sh     # [not win]
+    script: build-aspnetcore.bat  # [win]
+    script: build-aspnetcore.sh  # [not win]
     requirements:
       build:
         - {{ stdlib('c') }}
         - {{ compiler('cxx') }}
+        - {{ stdlib('c') }}
         - posix                  # [win]
       host:
         - zlib                   # [unix]
@@ -152,9 +155,7 @@ outputs:
       home: https://github.com/dotnet/desktop                                         # [win]
       license: MIT                                                                    # [win]
       license_file: dotnet/LICENSE.txt                                                # [win]
-      summary: |                                                                      # [win]
-        .NET Core is a free and open-source managed computer software
-        framework for the Windows, Linux, and macOS operating systems.
+      summary: .NET Core is a free and open-source managed computer software framework for the Windows, Linux, and macOS operating systems.  # [win]
 
 about:
   home: https://github.com/dotnet/core
