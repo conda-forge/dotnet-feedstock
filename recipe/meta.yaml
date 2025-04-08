@@ -1,5 +1,6 @@
 {% set sdk_version = "8.0.407" %}
 {% set runtime_version = "8.0.14" %}
+(% set framework = sdk_version.split('.')[:1] | join('.') %] %}
 {% set sha256 = "02f63fbc16459ee2cf989c42160efb8c62039c3f042133d07245cd7f4466bfbd" %}  # [linux-aarch64]
 {% set sha256 = "99122db4459e0e6a7d55db2c738cfd1422a5357b9da2c050f0250eb33e939c7f" %}  # [linux-64]
 {% set sha256 = "7086d6d6dcdc0ddd7865266cf6b67cad85469c3a2f35fbbfd9ae92aaed4fce3a" %}  # [arm64]
@@ -41,9 +42,9 @@ outputs:
         - dotnet --version
         # Same test without setting the environment variable that should be in activation
         - DOTNET_EnableMacOSCodeSign=true mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build  # [unix]
-        - dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [linux]
+        - dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [linux]
         - grep "Hello, World!" self-test.txt  # [linux]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
         - renode-cli
 
@@ -53,7 +54,6 @@ outputs:
     script: build-runtime.sh  # [not win]
     build:
       missing_dso_whitelist:
-        - "$RPATH/liblttng-ust.so.0"  # [linux]
         - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
       ignore_run_exports:
         - libcurl  # [unix]
@@ -118,9 +118,9 @@ outputs:
         - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
         - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
         - cat self-test.csproj  # [unix]
-        - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net8.0/self-test.dll > self-test.txt  # [unix]
+        - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
         - grep "Hello, World!" self-test.txt  # [linux]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net8.0/self-test.dll" | findstr "Hello, World!"  # [win]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
       downstreams:
         - renode-cli
       requires:
