@@ -32,9 +32,9 @@ outputs:
     version: {{ sdk_version }}
     requirements:
       run:
-        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
         - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
         - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
+        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
         - {{ pin_subpackage('dotnet-sdk', exact=True) }}
     test:
       commands:
@@ -64,12 +64,14 @@ outputs:
         - posix  # [win]
       host:
         - libcurl  # [unix]
-        - lttng-ust  # [linux]
+        # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
+        # - lttng-ust  # [linux]
         - zlib  # [unix]
       run:
         - icu  # [unix]
         - libcurl  # [unix]
-        - lttng-ust  # [linux64]
+        # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
+        # - lttng-ust  # [linux]
     test:
       commands:
         - dotnet --list-runtimes
