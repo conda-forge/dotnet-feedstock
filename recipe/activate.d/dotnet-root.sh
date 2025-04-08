@@ -23,6 +23,10 @@ export DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=false
 export DOTNET_MULTILEVEL_LOOKUP=0
 export DOTNET_NOLOGO=1
 
+if [[ $(uname -m) == "aarch64" ]]; then
+  export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+fi
+
 # remove existing entries to prevent duplicates
 NEW_PATH=$(remove_from_path "${DOTNET_ROOT}")
 NEW_PATH=$(remove_from_path "${DOTNET_TOOLS}" "${NEW_PATH}")
