@@ -36,11 +36,16 @@ outputs:
       run_exports:
         - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
     requirements:
+      # host:
+      #   - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
+      #   - {{ pin_subpackage('dotnet-desktop', max_pin="x.x") }}  # [win]
+      #   - {{ pin_subpackage('dotnet-runtime', max_pin="x.x") }}
+      #   - {{ pin_subpackage('dotnet-sdk', exact=true) }}
       run:
-        - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
-        - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
+        - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
+        - {{ pin_subpackage('dotnet-desktop', max_pin="x.x") }}  # [win]
         - {{ pin_subpackage('dotnet-runtime', max_pin="x.x") }}
-        - {{ pin_subpackage('dotnet-sdk', exact=True) }}
+        - {{ pin_subpackage('dotnet-sdk', exact=true) }}
     test:
       commands:
         - dotnet --version
@@ -65,17 +70,18 @@ outputs:
     #     # - lttng-ust  # [linux]
     requirements:
       build:
+        - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix  # [win]
       host:
-        - libcurl  # [unix]
+        - libcurl  # [unix and not aarch64]
         # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
         # - lttng-ust  # [linux]
-        - zlib  # [unix]
+        - zlib  # [unix and not aarch64]
       run:
         - icu  # [unix]
-        - libcurl  # [unix]
+        # - libcurl  # [unix]
         # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
         # - lttng-ust  # [linux]
     test:
@@ -97,9 +103,9 @@ outputs:
     version: {{ sdk_version }}
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
-    build:
-      run_exports:
-        - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
+    # build:
+    #   run_exports:
+    #     - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
     #   missing_dso_whitelist:
     #     - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
     #   ignore_run_exports:
@@ -112,8 +118,8 @@ outputs:
       #   - {{ compiler('cxx') }}
       #   - {{ stdlib('c') }}
       #   - posix  # [win]
-      host:
-        - dotnet-runtime ={{ runtime_version }}
+      # host:
+      #   - dotnet-runtime ={{ runtime_version }}
       #   - libcurl  # [unix]
       #   - lttng-ust  # [linux64]
       #   - zlib  # [unix]
@@ -129,10 +135,6 @@ outputs:
         - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
         - grep "Hello, World!" self-test.txt  # [linux]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
-      downstreams:
-        - renode-cli
-      requires:
-        - icu  # [unix]
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
