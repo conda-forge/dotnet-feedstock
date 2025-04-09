@@ -16,15 +16,16 @@ cp ./dotnet/dotnet* "${DOTNET_ROOT}"
 cp -r ./dotnet/shared/Microsoft.NETCore.App/ "${DOTNET_ROOT}/shared/Microsoft.NETCore.App/"
 cp -r ./dotnet/host/ "${DOTNET_ROOT}/host/"
 
+runtime_lib_dir=${DOTNET_ROOT}/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME_VERSION}
 if [[ "${target_platform}" == "linux-"* ]]; then
     # Hack to fix liblttng-ust dependency issues. liblttng-ust.so.0 is no longer supported.
-    patchelf --remove-needed liblttng-ust.so.0 ${DOTNET_ROOT}/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME_VERSION}/libcoreclrtraceptprovider.so
+    patchelf --remove-needed liblttng-ust.so.0 ${runtime_lib_dir}/libcoreclrtraceptprovider.so
 fi
 if [[ "${target_platform}" == "linux-aarch64" ]]; then
   patchelf --remove-needed ld-linux-x86-64.so.2 ${DOTNET_ROOT}/dotnet
   patchelf --remove-needed ld-linux-x86-64.so.2 ${DOTNET_ROOT}/host/fxr/${DOTNET_RUNTIME_VERSION}/libhostfxr.so
   for lib in libmscordaccore.so libcoreclr.so libhostpolicy.so libclrjit.so libmscordbi.so; do
-    patchelf --remove-needed ld-linux-x86-64.so.2 ${DOTNET_ROOT}/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME_VERSION}/$lib
+    patchelf --remove-needed ld-linux-x86-64.so.2 ${runtime_lib_dir}/$lib
   done
 fi
 
