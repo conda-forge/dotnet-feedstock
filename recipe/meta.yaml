@@ -98,7 +98,7 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
+        # - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
         - dotnet --version
         - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
         - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
