@@ -26,21 +26,11 @@ source:
 build:
   number: 3
   binary_relocation: False  # [osx]
-  script_env:
-    - DOTNET_RUNTIME_VERSION={{ runtime_version }}
 
 outputs:
   - name: dotnet
     version: {{ sdk_version }}
-    # build:
-    #   run_exports:
-    #     - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
     requirements:
-      # host:
-      #   - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
-      #   - {{ pin_subpackage('dotnet-desktop', max_pin="x.x") }}  # [win]
-      #   - {{ pin_subpackage('dotnet-runtime', max_pin="x.x") }}
-      #   - {{ pin_subpackage('dotnet-sdk', exact=true) }}
       run:
         - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
         - {{ pin_subpackage('dotnet-desktop', max_pin="x.x") }}  # [win]
@@ -60,27 +50,19 @@ outputs:
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
     build:
-    #   ignore_run_exports:
-    #     - libcurl  # [unix]
+      ignore_run_exports:
         - libcxx  # [osx]
-    #     - libzlib  # [osx]
-    #     # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
-    #     # - lttng-ust  # [linux]
+        - ucrt  # [win]
+        - vc14_runtime  # [win]
+      script_env:
+        - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix  # [win]
-      host:
-        # - libcurl  # [unix and not aarch64]
-        # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
-        # - lttng-ust  # [linux]
-        # - zlib  # [unix and not aarch64]
       run:
         - icu  # [unix]
-        # - libcurl  # [unix]
-        # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
-        # - lttng-ust  # [linux]
     test:
       commands:
         - dotnet --list-runtimes
@@ -100,35 +82,25 @@ outputs:
     version: {{ sdk_version }}
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
-    # build:
-    #   run_exports:
-    #     - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
-    #   missing_dso_whitelist:
-    #     - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
-    #   ignore_run_exports:
-    #     - libcurl  # [unix]
-    #     - libcxx  # [osx]
-    #     - libzlib  # [osx]
-    #     - lttng-ust  # [linux]
+    build:
+      ignore_run_exports:
+        - libcxx  # [osx]
+        - ucrt  # [win]
+        - vc14_runtime  # [win]
+      script_env:
+        - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix  # [win]
-      # host:
-      #   - dotnet-runtime ={{ runtime_version }}
-      #   - libcurl  # [unix]
-      #   - lttng-ust  # [linux64]
-      #   - zlib  # [unix]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - dotnet --version  # [not aarch64]
-        - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
         - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
+        - dotnet --version
         - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
-        - cat self-test.csproj  # [unix]
         - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
         - grep "Hello, World!" self-test.txt  # [linux]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
