@@ -32,9 +32,9 @@ build:
 outputs:
   - name: dotnet
     version: {{ sdk_version }}
-    build:
-      run_exports:
-        - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
+    # build:
+    #   run_exports:
+    #     - {{ pin_subpackage("dotnet-runtime", max_pin="x.x") }}
     requirements:
       # host:
       #   - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
@@ -59,26 +59,23 @@ outputs:
     version: {{ runtime_version }}
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
-    # build:
-    #   missing_dso_whitelist:
-    #     - "$RPATH/ld-linux-x86-64.so.2"  # [linux and aarch64]
+    build:
     #   ignore_run_exports:
     #     - libcurl  # [unix]
-    #     - libcxx  # [osx]
+        - libcxx  # [osx]
     #     - libzlib  # [osx]
     #     # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
     #     # - lttng-ust  # [linux]
     requirements:
       build:
-        - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ stdlib('c') }}
         - posix  # [win]
       host:
-        - libcurl  # [unix and not aarch64]
+        # - libcurl  # [unix and not aarch64]
         # runtime attempts to load liblttng-ust.so.0 instead of liblttng-ust.so.1 that this provides
         # - lttng-ust  # [linux]
-        - zlib  # [unix and not aarch64]
+        # - zlib  # [unix and not aarch64]
       run:
         - icu  # [unix]
         # - libcurl  # [unix]
@@ -114,10 +111,10 @@ outputs:
     #     - libzlib  # [osx]
     #     - lttng-ust  # [linux]
     requirements:
-      # build:
-      #   - {{ compiler('cxx') }}
-      #   - {{ stdlib('c') }}
-      #   - posix  # [win]
+      build:
+        - {{ compiler('cxx') }}
+        - {{ stdlib('c') }}
+        - posix  # [win]
       # host:
       #   - dotnet-runtime ={{ runtime_version }}
       #   - libcurl  # [unix]
