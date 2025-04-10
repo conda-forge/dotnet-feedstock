@@ -32,10 +32,10 @@ outputs:
     version: {{ sdk_version }}
     requirements:
       run:
-        - {{ pin_subpackage('dotnet-aspnetcore', max_pin="x.x") }}
-        - {{ pin_subpackage('dotnet-desktop', max_pin="x.x") }}  # [win]
-        - {{ pin_subpackage('dotnet-runtime', max_pin="x.x") }}
-        - {{ pin_subpackage('dotnet-sdk', exact=true) }}
+        - dotnet-aspnetcore ={{ runtime_version }}
+        - dotnet-desktop ={{ runtime_version }}  # [win]
+        - dotnet-runtime ={{ runtime_version }}
+        - dotnet-sdk ={{ sdk_version }}
     test:
       commands:
         - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"  # [unix]
