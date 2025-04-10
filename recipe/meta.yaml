@@ -63,6 +63,7 @@ outputs:
         - posix  # [win]
       run:
         - icu  # [unix]
+        - openssl  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
@@ -82,23 +83,13 @@ outputs:
     version: {{ sdk_version }}
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
-    build:
-      ignore_run_exports:
-        - libcxx  # [osx]
-        - ucrt  # [win]
-        - vc14_runtime  # [win]
-      script_env:
-        - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
       build:
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
         - posix  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        # - export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1  # [aarch64]
         - dotnet --version
         - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
         - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
