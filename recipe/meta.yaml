@@ -82,9 +82,12 @@ outputs:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - test -d $PREFIX/lib/dotnet/packs
-        - test -d $PREFIX/lib/dotnet/sdk
-        - test -d $PREFIX/lib/dotnet/templates
+        - test -d $PREFIX/lib/dotnet/packs  # [unix]
+        - test -d $PREFIX/lib/dotnet/sdk  # [unix]
+        - test -d $PREFIX/lib/dotnet/templates  # [unix]
+        - if not exist %PREFIX%\\dotnet\\packs exit 1  # [win]
+        - if not exist %PREFIX%\\dotnet\\sdk exit 1  # [win]
+        - if not exist %PREFIX%\\dotnet\\templates exit 1  # [win]
         - dotnet --version
         - mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build  # [unix]
         - dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
