@@ -58,6 +58,7 @@ outputs:
       run:
         - icu  # [unix]
         - openssl  # [aarch64]
+        - zlib  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
@@ -80,6 +81,7 @@ outputs:
         - posix  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
+        - zlib  # [aarch64]
     test:
       commands:
         - test -d $PREFIX/lib/dotnet/packs  # [unix]
