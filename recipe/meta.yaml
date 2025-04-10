@@ -1,17 +1,18 @@
 {% set sdk_version = "9.0.202" %}
 {% set runtime_version = "9.0.3" %}
-{% set sha256 = "e38c65156588446f4686b50607996708a4648f9075efe12d73857473f9e10136" %}  # [linux-aarch64]
-{% set sha256 = "0c7bc01debcad57a61fe15bf3c7e6baff1bbbd4f10e4f1284b95866dfff5b444" %}  # [linux-64]
-{% set sha256 = "4deb670a00fcbbaf65bfde9fd777a134cd34f0f1fbb94da048d303311d36ceec" %}  # [arm64]
-{% set sha256 = "893930d0b256780c8f0a6c0b7a601541e39c568df835f7099fad89ab13057b31" %}  # [osx]
+{% set framework = '.'.join(sdk_version.split('.')[:2]) %}
+{% set sha256 = "e38c65156588446f4686b50607996708a4648f9075efe12d73857473f9e10136" %}  # [linux and aarch64]
+{% set sha256 = "0c7bc01debcad57a61fe15bf3c7e6baff1bbbd4f10e4f1284b95866dfff5b444" %}  # [linux and x86_64]
+{% set sha256 = "4deb670a00fcbbaf65bfde9fd777a134cd34f0f1fbb94da048d303311d36ceec" %}  # [osx and arm64]
+{% set sha256 = "893930d0b256780c8f0a6c0b7a601541e39c568df835f7099fad89ab13057b31" %}  # [osx and x86_64]
 {% set sha256 = "d1dda520f8eb602e0b447e92d92d14145f37aa28ab59b267f6d8fc692051ec77" %}  # [win]
-{% set platform = "linux-arm64" %}    # [linux-aarch64]
-{% set platform = "linux-x64" %}  # [linux-64]
-{% set platform = "osx-arm64" %}  # [arm64]
-{% set platform = "osx-x64" %}    # [osx]
-{% set platform = "win-x64" %}    # [win]
-{% set ext = "tar.gz" %}      # [not win]
-{% set ext = "zip" %}         # [win]
+{% set platform = "linux-arm64" %}  # [linux and aarch64]
+{% set platform = "linux-x64" %}  # [linux and x86_64]
+{% set platform = "osx-arm64" %}  # [osx and arm64]
+{% set platform = "osx-x64" %}  # [osx and x86_64]
+{% set platform = "win-x64" %}  # [win]
+{% set ext = "tar.gz" %}  # [not win]
+{% set ext = "zip" %}  # [win]
 
 package:
   name: dotnet
@@ -23,7 +24,7 @@ source:
   folder: dotnet
 
 build:
-  number: 2
+  number: 3
   binary_relocation: False  # [osx]
 
 outputs:
@@ -31,41 +32,35 @@ outputs:
     version: {{ sdk_version }}
     requirements:
       run:
-        - {{ pin_subpackage('dotnet-runtime', exact=True) }}
-        - {{ pin_subpackage('dotnet-aspnetcore', exact=True) }}
-        - {{ pin_subpackage('dotnet-desktop', exact=True) }}  # [win]
-        - {{ pin_subpackage('dotnet-sdk', exact=True) }}
+        - dotnet-aspnetcore ={{ runtime_version }}
+        - dotnet-desktop ={{ runtime_version }}  # [win]
+        - dotnet-runtime ={{ runtime_version }}
+        - dotnet-sdk ={{ sdk_version }}
     test:
       commands:
-       - dotnet --version
+        - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"  # [unix]
+        - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
+        - if not defined DOTNET_ROOT exit 1  # [win]
+        - if not defined DOTNET_TOOLS exit 1  # [win]
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
+    build:
+      script_env:
+        - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
       build:
-        - {{ stdlib('c') }}
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
-        - posix                  # [win]
-      host:
-        - zlib                   # [unix]
-        - libcurl                # [unix]
-        - lttng-ust              # [linux64]
+        - {{ compiler('cxx') }}  # [linux]
+        - {{ stdlib('c') }}  # [linux]
+        - posix  # [win]
       run:
-        - lttng-ust                 # [linux64]
-        - libcurl                   # [unix]
-        - icu                       # [unix]
-        - krb5                      # [unix]
-        - __glibc >=2.17            # [linux64]
+        - icu  # [unix]
+        - openssl  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
-        #- test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"         # [unix]
-        #- test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
-        #- if not defined DOTNET_ROOT exit 1   # [win]
-        #- if not defined DOTNET_TOOLS exit 1  # [win]
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
@@ -80,25 +75,24 @@ outputs:
     script: build-sdk.sh  # [not win]
     requirements:
       build:
-        - {{ stdlib('c') }}
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
-        - posix                  # [win]
-      host:
-        - zlib                   # [unix]
-        - libcurl                # [unix]
-        - lttng-ust              # [linux64]
+        - {{ compiler('cxx') }}  # [linux]
+        - {{ stdlib('c') }}  # [linux]
+        - posix  # [win]
       run:
-        - lttng-ust             # [linux64]
-        - libcurl               # [unix]
-        - icu                   # [unix]
-        - krb5                  # [unix]
-        - __glibc >=2.17        # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - dotnet --version                   # [not aarch64]
-        - test -f $PREFIX/lib/dotnet/dotnet  # [aarch64]
+        - test -d $PREFIX/lib/dotnet/packs  # [unix]
+        - test -d $PREFIX/lib/dotnet/sdk  # [unix]
+        - test -d $PREFIX/lib/dotnet/templates  # [unix]
+        - if not exist %PREFIX%\\dotnet\\packs exit 1  # [win]
+        - if not exist %PREFIX%\\dotnet\\sdk exit 1  # [win]
+        - if not exist %PREFIX%\\dotnet\\templates exit 1  # [win]
+        - dotnet --version
+        - mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build  # [unix]
+        - dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
+        - grep "Hello, World!" self-test.txt  # [unix]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
     about:
       home: https://github.com/dotnet/sdk
       license: MIT
@@ -112,25 +106,11 @@ outputs:
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
     requirements:
-      build:
-        - {{ stdlib('c') }}
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
-        - posix                  # [win]
-      host:
-        - zlib                   # [unix]
-        - libcurl                # [unix]
-        - lttng-ust              # [linux64]
       run:
-        - lttng-ust                 # [linux64]
-        - libcurl                   # [unix]
-        - icu                       # [unix]
-        - krb5                      # [unix]
-        - __glibc >=2.17            # [linux64]
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
-        - test -d $PREFIX/lib/dotnet/shared/Microsoft.AspNetCore.App              # [not win]
+        - test -d $PREFIX/lib/dotnet/shared/Microsoft.AspNetCore.App  # [not win]
         - if not exist %PREFIX%\\dotnet\\shared\\Microsoft.AspNetCore.App exit 1  # [win]
     about:
       home: https://github.com/dotnet/aspnetcore
