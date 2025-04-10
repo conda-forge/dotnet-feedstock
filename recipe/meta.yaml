@@ -38,28 +38,22 @@ outputs:
         - {{ pin_subpackage('dotnet-sdk', exact=true) }}
     test:
       commands:
-        - dotnet --version
-        # Same test without setting the environment variable that should be in activation
-        - DOTNET_EnableMacOSCodeSign=true mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build  # [unix]
-        - dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [linux]
-        - grep "Hello, World!" self-test.txt  # [linux]
-        - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
+        - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"  # [unix]
+        - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
+        - if not defined DOTNET_ROOT exit 1  # [win]
+        - if not defined DOTNET_TOOLS exit 1  # [win]
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
     build:
-      ignore_run_exports:
-        - libcxx  # [osx]
-        - ucrt  # [win]
-        - vc14_runtime  # [win]
       script_env:
         - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
       build:
-        - {{ compiler('cxx') }}
-        - {{ stdlib('c') }}
+        - {{ compiler('cxx') }}  # [linux]
+        - {{ stdlib('c') }}  # [linux]
         - posix  # [win]
       run:
         - icu  # [unix]
@@ -67,10 +61,6 @@ outputs:
     test:
       commands:
         - dotnet --list-runtimes
-        - test "${DOTNET_ROOT}" = "${CONDA_PREFIX}/lib/dotnet"  # [unix]
-        - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
-        - if not defined DOTNET_ROOT exit 1  # [win]
-        - if not defined DOTNET_TOOLS exit 1  # [win]
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
@@ -85,15 +75,20 @@ outputs:
     script: build-sdk.sh  # [not win]
     requirements:
       build:
+        - {{ compiler('cxx') }}  # [linux]
+        - {{ stdlib('c') }}  # [linux]
         - posix  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
       commands:
+        - test -d $PREFIX/lib/dotnet/packs
+        - test -d $PREFIX/lib/dotnet/sdk
+        - test -d $PREFIX/lib/dotnet/templates
         - dotnet --version
-        - mkdir self-test && cd self-test && dotnet new console && dotnet clean  # [unix]
-        - DOTNET_EnableMacOSCodeSign=false dotnet build && dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
-        - grep "Hello, World!" self-test.txt  # [linux]
+        - mkdir self-test && cd self-test && dotnet new console && dotnet clean && dotnet build  # [unix]
+        - dotnet exec bin/Debug/net{{ framework }}/self-test.dll > self-test.txt  # [unix]
+        - grep "Hello, World!" self-test.txt  # [unix]
         - mkdir self-test && cd self-test && dotnet new console && dotnet build && dotnet exec "bin/Debug/net{{ framework }}/self-test.dll" | findstr "Hello, World!"  # [win]
     about:
       home: https://github.com/dotnet/sdk
