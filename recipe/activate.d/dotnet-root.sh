@@ -18,14 +18,12 @@ export DOTNET_ROOT=$CONDA_PREFIX/lib/dotnet
 export DOTNET_TOOLS=$DOTNET_ROOT/tools
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
+# runtime would attempt to load liblttng-ust.so.0, which is no longer supported
+export DOTNET_LTTNG=0
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 export DOTNET_ADD_GLOBAL_TOOLS_TO_PATH=false
 export DOTNET_MULTILEVEL_LOOKUP=0
 export DOTNET_NOLOGO=1
-
-if [[ $(uname -m) == "aarch64" ]]; then
-  export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-fi
 
 # remove existing entries to prevent duplicates
 NEW_PATH=$(remove_from_path "${DOTNET_ROOT}")
