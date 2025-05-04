@@ -15,10 +15,10 @@ Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
 
-About dotnet-runtime
---------------------
+About dotnet-aspnetcore
+-----------------------
 
-Home: https://github.com/dotnet/runtime
+Home: https://github.com/dotnet/aspnetcore
 
 Package license: MIT
 
@@ -26,10 +26,10 @@ Summary: .NET Core is a free and open-source managed computer software
 framework for the Windows, Linux, and macOS operating systems.
 
 
-About dotnet-aspnetcore
------------------------
+About dotnet-runtime
+--------------------
 
-Home: https://github.com/dotnet/aspnetcore
+Home: https://github.com/dotnet/runtime
 
 Package license: MIT
 
