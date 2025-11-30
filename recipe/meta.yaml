@@ -1,11 +1,11 @@
 {% set sdk_version = "10.0.100" %}
 {% set runtime_version = "10.0.0" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
-{% set sha256 = "59f82b35c81afacf740c73b73972c3a5aa7d091538ee8f2ffc36a6a3824d589a" %}  # [linux and aarch64]
-{% set sha256 = "c7e99b0060a274f31a29ec5e159c7133478bb30dca0366e1c5617976e6de23a3" %}  # [linux and x86_64]
-{% set sha256 = "9558f62c919572b68a7584dfa34dab0c48838e6b3ca97021ba70d33a0af6c6d3" %}  # [osx and arm64]
-{% set sha256 = "161fba3ddea72cf5ba73bfe9ee4bf9ea7195dec7b06378282305b282eefb065a" %}  # [osx and x86_64]
-{% set sha256 = "6687f7f9789ea6d53a6beedd459f999ba68ff506a7d944db82a652febb1de296" %}  # [win]
+{% set sha256 = "b6425aeef6009a2d427bf600a2cd02f9dd6ac608e6bad021fd2f82f685914793" %}  # [linux and aarch64]
+{% set sha256 = "a9631cc6bfad0ef167383ac654b54254bad95a6fb4b6f4309fa78f558055e637" %}  # [linux and x86_64]
+{% set sha256 = "71b3815ef8d83a6bbebf8627a56639600193f22d4ea6a6de2f71855c4b3e63fd" %}  # [osx and arm64]
+{% set sha256 = "d8fd6e3f2e393cad300794d43ae26d01f9db31356c95381bcfb9d3d7f66d187e" %}  # [osx and x86_64]
+{% set sha256 = "ce09b60637c525a5ccd3368962dc936df10141d397e305f5406318f61da66709" %}  # [win]
 {% set platform = "linux-arm64" %}  # [linux and aarch64]
 {% set platform = "linux-x64" %}  # [linux and x86_64]
 {% set platform = "osx-arm64" %}  # [osx and arm64]
