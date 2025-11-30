@@ -1,5 +1,5 @@
-{% set sdk_version = "9.0.203" %}
-{% set runtime_version = "9.0.4" %}
+{% set sdk_version = "10.0.100" %}
+{% set runtime_version = "10.0.0" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
 {% set sha256 = "59f82b35c81afacf740c73b73972c3a5aa7d091538ee8f2ffc36a6a3824d589a" %}  # [linux and aarch64]
 {% set sha256 = "c7e99b0060a274f31a29ec5e159c7133478bb30dca0366e1c5617976e6de23a3" %}  # [linux and x86_64]
