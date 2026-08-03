@@ -57,7 +57,12 @@ outputs:
         - posix  # [win]
       run:
         - icu  # [unix]
-        - openssl  # [aarch64]
+        # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
+        # libcrypto.so.4 with no .so.3 compatibility symlink, and .NET's crypto
+        # shim dlopens a fixed list of sonames topping out at libssl.so.3. An
+        # unpinned openssl resolves to 4.x and every crypto call aborts with
+        # "No usable version of libssl was found".
+        - openssl <4  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
