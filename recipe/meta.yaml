@@ -1,16 +1,18 @@
-{% set sdk_version = "10.0.100" %}
-{% set runtime_version = "10.0.0" %}
+{% set sdk_version = "10.0.302" %}
+{% set runtime_version = "10.0.10" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
-{% set sha256 = "b6425aeef6009a2d427bf600a2cd02f9dd6ac608e6bad021fd2f82f685914793" %}  # [linux and aarch64]
-{% set sha256 = "a9631cc6bfad0ef167383ac654b54254bad95a6fb4b6f4309fa78f558055e637" %}  # [linux and x86_64]
-{% set sha256 = "71b3815ef8d83a6bbebf8627a56639600193f22d4ea6a6de2f71855c4b3e63fd" %}  # [osx and arm64]
-{% set sha256 = "d8fd6e3f2e393cad300794d43ae26d01f9db31356c95381bcfb9d3d7f66d187e" %}  # [osx and x86_64]
-{% set sha256 = "ce09b60637c525a5ccd3368962dc936df10141d397e305f5406318f61da66709" %}  # [win]
+{% set sha256 = "1c56318e4099990719f6369184e08bbad0248c09c5ad7532d2516e3cdfc3ab6d" %}  # [linux and aarch64]
+{% set sha256 = "264a838d6f5d1a252489c7bb2e2946a579d6a881391d50ffd175a01e4d948c1c" %}  # [linux and x86_64]
+{% set sha256 = "8d9f9f6155896e3b1ebedcf1dc0c60248077c7ac0a88855e2102a377bc1e1e3b" %}  # [osx and arm64]
+{% set sha256 = "a07f6d597147439927938b7eebc1e46fe55ce4b19d0e10343060c025fc029b62" %}  # [osx and x86_64]
+{% set sha256 = "2cb9d5d98aeda0582ec02a1e429a613df6d97a1ce0f06b361f7def9b7e7c1a6b" %}  # [win and x86_64]
+{% set sha256 = "ae2ec2bfe5e9789b666ee404351a639c7df9da8fd06536d606aeb554ccb1874a" %}  # [win and arm64]
 {% set platform = "linux-arm64" %}  # [linux and aarch64]
 {% set platform = "linux-x64" %}  # [linux and x86_64]
 {% set platform = "osx-arm64" %}  # [osx and arm64]
 {% set platform = "osx-x64" %}  # [osx and x86_64]
-{% set platform = "win-x64" %}  # [win]
+{% set platform = "win-x64" %}  # [win and x86_64]
+{% set platform = "win-arm64" %}  # [win and arm64]
 {% set ext = "tar.gz" %}  # [not win]
 {% set ext = "zip" %}  # [win]
 
@@ -42,12 +44,24 @@ outputs:
         - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
         - if not defined DOTNET_ROOT exit 1  # [win]
         - if not defined DOTNET_TOOLS exit 1  # [win]
+        # Value, not just existence (#13). /I because Windows paths are
+        # case-insensitive and CONDA_PREFIX's casing need not match. Compared
+        # against CONDA_PREFIX rather than PREFIX because that is what
+        # activate.d/dotnet-root.bat derives DOTNET_ROOT from. Single
+        # backslashes: the doubled form used by the `if not exist` tests nearby
+        # works for paths but not for string equality.
+        - if /I not "%DOTNET_ROOT%"=="%CONDA_PREFIX%\dotnet" exit 1  # [win]
+        - if /I not "%DOTNET_TOOLS%"=="%CONDA_PREFIX%\dotnet\tools" exit 1  # [win]
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
     build:
+      # Repeated per output on purpose: conda-build does NOT inherit top-level
+      # build settings into outputs, so the top-level `binary_relocation: False`
+      # never covered the files these outputs actually ship.
+      binary_relocation: False  # [osx]
       script_env:
         - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
@@ -57,7 +71,12 @@ outputs:
         - posix  # [win]
       run:
         - icu  # [unix]
-        - openssl  # [aarch64]
+        # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
+        # libcrypto.so.4 with no .so.3 compatibility symlink, and .NET's crypto
+        # shim dlopens a fixed list of sonames topping out at libssl.so.3. An
+        # unpinned openssl resolves to 4.x and every crypto call aborts with
+        # "No usable version of libssl was found".
+        - openssl <4  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
@@ -73,6 +92,8 @@ outputs:
     version: {{ sdk_version }}
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
+    build:
+      binary_relocation: False  # [osx]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [linux]
@@ -105,6 +126,8 @@ outputs:
     version: {{ runtime_version }}
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
+    build:
+      binary_relocation: False  # [osx]
     requirements:
       run:
         - dotnet-runtime ={{ runtime_version }}
