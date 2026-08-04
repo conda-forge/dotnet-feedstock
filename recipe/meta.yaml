@@ -1,16 +1,18 @@
-{% set sdk_version = "8.0.408" %}
-{% set runtime_version = "8.0.15" %}
+{% set sdk_version = "8.0.423" %}
+{% set runtime_version = "8.0.29" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
-{% set sha256 = "8e5305c7bbbae3888aca7781ad80d2506bcd9541603a25d506105f65160f8272" %}  # [linux and aarch64]
-{% set sha256 = "2f8dcfb5b7e3dcf220c42d39ecc1b0333617aceeceb148862a9232207113e39b" %}  # [linux and x86_64]
-{% set sha256 = "6f2b60b773ab0cf006ed72a39edaeb3c41434c5a4b9464d444bf8be3a139bb25" %}  # [osx and arm64]
-{% set sha256 = "9a37efc151fa7354e375380e8d03061ea69c59a0fe186ad5c0ef58d0de101e16" %}  # [osx and x86_64]
-{% set sha256 = "dd92f13c30239308bda478c31572fce20a4cde0870b9311a39bdc1158262e47a" %}  # [win]
+{% set sha256 = "ccb7cf301ded08e614b6f5bafa82f59b335aaef1c4757c4c5d6dd8aeef5f3390" %}  # [linux and aarch64]
+{% set sha256 = "05e69a3c48f6ce37bdf18e9db527d26fc7fc46d4d99fa143660fe09bf23acd4d" %}  # [linux and x86_64]
+{% set sha256 = "be0e987d6f2c67b9a9cd35b004b47d69d8278c783242f4add079bee8fbd573ec" %}  # [osx and arm64]
+{% set sha256 = "a285b364609047185f4bbdf8db69798791d9e9b9a8eeab3ceeaec56611dc3468" %}  # [osx and x86_64]
+{% set sha256 = "448ff18c9178dbfe00503eff648df106af92762d818d84b6d3d8ef9e1e7751c0" %}  # [win and x86_64]
+{% set sha256 = "dd7cb087438d63944e1984827640ab9a01947e35846cb446468fdbfb0fd515fa" %}  # [win and arm64]
 {% set platform = "linux-arm64" %}  # [linux and aarch64]
 {% set platform = "linux-x64" %}  # [linux and x86_64]
 {% set platform = "osx-arm64" %}  # [osx and arm64]
 {% set platform = "osx-x64" %}  # [osx and x86_64]
-{% set platform = "win-x64" %}  # [win]
+{% set platform = "win-x64" %}  # [win and x86_64]
+{% set platform = "win-arm64" %}  # [win and arm64]
 {% set ext = "tar.gz" %}  # [not win]
 {% set ext = "zip" %}  # [win]
 
@@ -24,7 +26,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1
+  number: 0
   binary_relocation: False  # [osx]
 
 outputs:
@@ -57,7 +59,12 @@ outputs:
         - posix  # [win]
       run:
         - icu  # [unix]
-        - openssl  # [aarch64]
+        # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
+        # libcrypto.so.4 with no .so.3 compatibility symlink, and .NET's crypto
+        # shim dlopens a fixed list of sonames topping out at libssl.so.3. An
+        # unpinned openssl resolves to 4.x and every crypto call aborts with
+        # "No usable version of libssl was found".
+        - openssl <4  # [aarch64]
         - zlib  # [aarch64]
     test:
       commands:
