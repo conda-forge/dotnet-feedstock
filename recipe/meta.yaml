@@ -1,16 +1,18 @@
-{% set sdk_version = "10.0.100" %}
-{% set runtime_version = "10.0.0" %}
+{% set sdk_version = "9.0.316" %}
+{% set runtime_version = "9.0.18" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
-{% set sha256 = "b6425aeef6009a2d427bf600a2cd02f9dd6ac608e6bad021fd2f82f685914793" %}  # [linux and aarch64]
-{% set sha256 = "a9631cc6bfad0ef167383ac654b54254bad95a6fb4b6f4309fa78f558055e637" %}  # [linux and x86_64]
-{% set sha256 = "71b3815ef8d83a6bbebf8627a56639600193f22d4ea6a6de2f71855c4b3e63fd" %}  # [osx and arm64]
-{% set sha256 = "d8fd6e3f2e393cad300794d43ae26d01f9db31356c95381bcfb9d3d7f66d187e" %}  # [osx and x86_64]
-{% set sha256 = "ce09b60637c525a5ccd3368962dc936df10141d397e305f5406318f61da66709" %}  # [win]
+{% set sha256 = "98d8195bb0a072ba1d3d26126f6c9788a4381a529ba85dccdf4079a7961b68c9" %}  # [linux and aarch64]
+{% set sha256 = "f3df20e692b4c9cf25b3a6a6f213e3c79c95d46e4fbc6ab53f772fbc9164a4d1" %}  # [linux and x86_64]
+{% set sha256 = "50bf7d49441b286c066888c484f10d05d932fabf42377bee1f8ea2b910226a86" %}  # [osx and arm64]
+{% set sha256 = "6dbe4eee3f71cbaff9f772e02facf7e0639fb259d4bcd158bdc0288fdcb99ae0" %}  # [osx and x86_64]
+{% set sha256 = "bdee80e2ad7d71d945a8fcc1967d207e78f345d2642cf63b992f061137e24c87" %}  # [win and x86_64]
+{% set sha256 = "59e760c2a2ccefb869dc5d1a87b438d06e2d4975dbc28bda2f3afb504047e5a0" %}  # [win and arm64]
 {% set platform = "linux-arm64" %}  # [linux and aarch64]
 {% set platform = "linux-x64" %}  # [linux and x86_64]
 {% set platform = "osx-arm64" %}  # [osx and arm64]
 {% set platform = "osx-x64" %}  # [osx and x86_64]
-{% set platform = "win-x64" %}  # [win]
+{% set platform = "win-x64" %}  # [win and x86_64]
+{% set platform = "win-arm64" %}  # [win and arm64]
 {% set ext = "tar.gz" %}  # [not win]
 {% set ext = "zip" %}  # [win]
 
@@ -57,7 +59,12 @@ outputs:
         - posix  # [win]
       run:
         - icu  # [unix]
-        - openssl  # [aarch64]
+        # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
+        # libcrypto.so.4 with no .so.3 compatibility symlink, and .NET's crypto
+        # shim dlopens a fixed list of sonames topping out at libssl.so.3. An
+        # unpinned openssl resolves to 4.x and every crypto call aborts with
+        # "No usable version of libssl was found".
+        - openssl <4  # [aarch64]
     test:
       commands:
         - dotnet --list-runtimes
