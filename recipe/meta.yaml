@@ -44,6 +44,14 @@ outputs:
         - test "${DOTNET_TOOLS}" = "${CONDA_PREFIX}/lib/dotnet/tools"  # [unix]
         - if not defined DOTNET_ROOT exit 1  # [win]
         - if not defined DOTNET_TOOLS exit 1  # [win]
+        # Value, not just existence (#13). /I because Windows paths are
+        # case-insensitive and CONDA_PREFIX's casing need not match. Compared
+        # against CONDA_PREFIX rather than PREFIX because that is what
+        # activate.d/dotnet-root.bat derives DOTNET_ROOT from. Single
+        # backslashes: the doubled form used by the `if not exist` tests nearby
+        # works for paths but not for string equality.
+        - if /I not "%DOTNET_ROOT%"=="%CONDA_PREFIX%\dotnet" exit 1  # [win]
+        - if /I not "%DOTNET_TOOLS%"=="%CONDA_PREFIX%\dotnet\tools" exit 1  # [win]
 
   - name: dotnet-runtime
     version: {{ runtime_version }}
