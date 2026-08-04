@@ -50,6 +50,10 @@ outputs:
     script: build-runtime.bat  # [win]
     script: build-runtime.sh  # [not win]
     build:
+      # Repeated per output on purpose: conda-build does NOT inherit top-level
+      # build settings into outputs, so the top-level `binary_relocation: False`
+      # never covered the files these outputs actually ship.
+      binary_relocation: False  # [osx]
       script_env:
         - DOTNET_RUNTIME_VERSION={{ runtime_version }}
     requirements:
@@ -80,6 +84,8 @@ outputs:
     version: {{ sdk_version }}
     script: build-sdk.bat  # [win]
     script: build-sdk.sh  # [not win]
+    build:
+      binary_relocation: False  # [osx]
     requirements:
       build:
         - {{ compiler('cxx') }}  # [linux]
@@ -112,6 +118,8 @@ outputs:
     version: {{ runtime_version }}
     script: build-aspnetcore.bat  # [win]
     script: build-aspnetcore.sh  # [not win]
+    build:
+      binary_relocation: False  # [osx]
     requirements:
       run:
         - dotnet-runtime ={{ runtime_version }}
