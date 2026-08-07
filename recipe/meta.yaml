@@ -26,7 +26,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1
+  number: 2
   binary_relocation: False  # [osx]
 
 outputs:
@@ -78,8 +78,26 @@ outputs:
         # "No usable version of libssl was found".
         - openssl <4  # [aarch64]
     test:
+      requires:
+        - cf-nvidia-tools 1.*  # [linux]
       commands:
         - dotnet --list-runtimes
+        # Assert the shipped binaries actually meet the glibc floor this recipe
+        # declares, rather than trusting that they still do. .NET 10 raised its
+        # requirement from 2.17 to 2.27 while the recipe went on declaring 2.17,
+        # so every 10.0.x package advertised `__glibc >=2.17` and installed on
+        # hosts where the runtime cannot load. A version bump touches only
+        # versions and hashes, so nothing caught it for the whole line.
+        #
+        # This output is the only one that needs it: aspnetcore's shared
+        # framework and the sdk tree ship no native objects at all.
+        #
+        # The count guard is NOT redundant. check-glibc skips paths that do not
+        # exist, so if this layout ever changes the file list comes back empty
+        # and the check exits 0 -- a silently vacuous pass, which is worse than
+        # no check. Verified directly: an empty file list returns success.
+        - test $(find $PREFIX/lib/dotnet -name '*.so' | wc -l) -ge 10  # [linux]
+        - c_stdlib_version={{ c_stdlib_version }} check-glibc $PREFIX/lib/dotnet/dotnet $(find $PREFIX/lib/dotnet -name '*.so')  # [linux]
     about:
       home: https://github.com/dotnet/runtime
       license: MIT
