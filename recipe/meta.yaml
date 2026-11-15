@@ -26,7 +26,7 @@ source:
   folder: dotnet
 
 build:
-  number: 0
+  number: 1
   binary_relocation: False  # [osx]
 
 outputs:
@@ -67,7 +67,9 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}  # [linux]
-        - {{ stdlib('c') }}  # [linux]
+        # unix, not linux: on osx this is what turns the 11.3 CryptoKit floor
+        # into a declared `__osx` constraint rather than an unread variable.
+        - {{ stdlib('c') }}  # [unix]
         - posix  # [win]
       run:
         - icu  # [unix]
@@ -97,7 +99,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}  # [linux]
-        - {{ stdlib('c') }}  # [linux]
+        - {{ stdlib('c') }}  # [unix]
         - posix  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
