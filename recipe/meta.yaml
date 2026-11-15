@@ -70,7 +70,7 @@ outputs:
         # unix, not linux: on osx this is what turns the 11.3 CryptoKit floor
         # into a declared `__osx` constraint rather than an unread variable.
         - {{ stdlib('c') }}  # [unix]
-        - posix  # [win]
+        - m2-base  # [win]
       run:
         - icu  # [unix]
         # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
@@ -118,7 +118,7 @@ outputs:
       build:
         - {{ compiler('cxx') }}  # [linux]
         - {{ stdlib('c') }}  # [unix]
-        - posix  # [win]
+        - m2-base  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -149,6 +149,10 @@ outputs:
     build:
       binary_relocation: False  # [osx]
     requirements:
+      build:
+        # build-aspnetcore.bat is a shim that runs the .sh through `bash -lc`,
+        # exactly like the other outputs, so it needs the same userland.
+        - m2-base  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -168,7 +172,7 @@ outputs:
     script: build-desktop.bat                                                         # [win]
     requirements:                                                                     # [win]
       build:                                                                          # [win]
-        - posix                                                                       # [win]
+        - m2-base                                                                     # [win]
       run:                                                                            # [win]
         - dotnet-runtime ={{ runtime_version }}                                       # [win]
     test:                                                                             # [win]
