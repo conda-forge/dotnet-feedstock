@@ -1,12 +1,12 @@
-{% set sdk_version = "10.0.401" %}
-{% set runtime_version = "10.0.12" %}
+{% set sdk_version = "10.0.404" %}
+{% set runtime_version = "10.0.15" %}
 {% set framework = '.'.join(sdk_version.split('.')[:2]) %}
-{% set sha256 = "91d3d67f2ed065909bd2e1ba50a37192aff6df15178304939d5b55634d72da6a" %}  # [linux and aarch64]
-{% set sha256 = "137268c8ad939c064ff1ee2a6fdf0899d8725377114ea012fbd1ad5fa2550418" %}  # [linux and x86_64]
-{% set sha256 = "d143ccec4474dce17d7b778854598137a2599b81828bce51e809897fe8bdf035" %}  # [osx and arm64]
-{% set sha256 = "0616332aa0b5edfa19443a9d217d14d086d2e9605d7c72979cf8ebbb494ac792" %}  # [osx and x86_64]
-{% set sha256 = "c1b96dea223e1ab2af8a51187e0cc96338d14c68834be1656136be18953cea09" %}  # [win and x86_64]
-{% set sha256 = "adfcd206adaa407d45d97a8678b9c36bb83089ba520eda6a97ab5a707c9af583" %}  # [win and arm64]
+{% set sha256 = "dcc820a4277ab6bb3f648c609d86f2a7912ba9a3d166545e7b95dff419c12f0f" %}  # [linux and aarch64]
+{% set sha256 = "c0610757a818fde4b960d27a0ac421f273068a05dc5ec7abafc01dbf84e9cb4d" %}  # [linux and x86_64]
+{% set sha256 = "acf7ebe726a030fa3d2bd03b06196971bd9ef123c579b9345d380bc0ef0d4e44" %}  # [osx and arm64]
+{% set sha256 = "43975ff4e35960556072da9300f4a77bc8dfa2dbe688b8812af32861a47069d5" %}  # [osx and x86_64]
+{% set sha256 = "f94f02eb8451605a893164bbd9c14e7f00ac8914c370c322822e6ac91b106bcc" %}  # [win and x86_64]
+{% set sha256 = "006bdf067957196a6ffea8640b645aaacbcfeba5ad094d90c8c6900a9dfe9ff4" %}  # [win and arm64]
 {% set platform = "linux-arm64" %}  # [linux and aarch64]
 {% set platform = "linux-x64" %}  # [linux and x86_64]
 {% set platform = "osx-arm64" %}  # [osx and arm64]
@@ -26,7 +26,7 @@ source:
   folder: dotnet
 
 build:
-  number: 1
+  number: 0
   binary_relocation: False  # [osx]
 
 outputs:
@@ -70,7 +70,7 @@ outputs:
         # unix, not linux: on osx this is what turns the 11.3 CryptoKit floor
         # into a declared `__osx` constraint rather than an unread variable.
         - {{ stdlib('c') }}  # [unix]
-        - posix  # [win]
+        - m2-base  # [win]
       run:
         - icu  # [unix]
         # <4 is required, not cosmetic. openssl 4.x ships only libssl.so.4 /
@@ -118,7 +118,7 @@ outputs:
       build:
         - {{ compiler('cxx') }}  # [linux]
         - {{ stdlib('c') }}  # [unix]
-        - posix  # [win]
+        - m2-base  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -149,6 +149,10 @@ outputs:
     build:
       binary_relocation: False  # [osx]
     requirements:
+      build:
+        # build-aspnetcore.bat is a shim that runs the .sh through `bash -lc`,
+        # exactly like the other outputs, so it needs the same userland.
+        - m2-base  # [win]
       run:
         - dotnet-runtime ={{ runtime_version }}
     test:
@@ -168,7 +172,7 @@ outputs:
     script: build-desktop.bat                                                         # [win]
     requirements:                                                                     # [win]
       build:                                                                          # [win]
-        - posix                                                                       # [win]
+        - m2-base                                                                     # [win]
       run:                                                                            # [win]
         - dotnet-runtime ={{ runtime_version }}                                       # [win]
     test:                                                                             # [win]
